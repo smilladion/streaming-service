@@ -1,3 +1,3 @@
 # Streaming Service
 
-#Dette er vores første GRPRO projekt. :)
+Dette er vores første GRPRO projekt. :)
