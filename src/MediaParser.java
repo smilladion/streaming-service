@@ -1,9 +1,13 @@
 import java.io.*;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Locale;
 
 // Læse .txt-file og oversætte det til felter
 
 public class MediaParser {
-    public static void parseMovies() throws IOException { //vi laver både en for Movies og en for Series
+    public static void parseMovies() throws IOException, ParseException { //vi laver både en for Movies og en for Series
         File f = new File("resources\\movies_text"); //fortæller java hvor .txt-filen er
 
         BufferedReader br = new BufferedReader(new FileReader(f));
@@ -14,12 +18,13 @@ public class MediaParser {
             String title = parts[0];
             int year = Integer.parseInt(parts[1]); //integer finder en int hvis der er en. Laver exception hvis den ikke kan læse parten pgs "." eller "," og crasher.
             String[] genres = parts[2].split(", "); //splitter genrer ligesom da vi splittede de andre linjer. String-arrayet hedder "genres".
-            double rating = Integer.parseInt(parts[3]);
+            NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+            Number rating = format.parse(parts[3]);
         }
     }
 
-    public static void parseSeries() throws IOException {
-        File f = new File("resources\\series_text"); //fortæller java hvor .txt-filen er
+    public static void parseSeries() throws IOException, ParseException {
+        File f = new File("resources\\series_text");
 
         BufferedReader br = new BufferedReader(new FileReader(f));
 
@@ -31,7 +36,9 @@ public class MediaParser {
             int startYear = Integer.parseInt(years[0]);
             int endYear = Integer.parseInt(years[1]); //crasher sandsynligvis lige nu, da ikke alle serier har slutår
             String[] genres = parts[2].split(", ");
-            double rating = Integer.parseInt(parts[3]);
+            NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+            Number rating = format.parse(parts[3]);
         }
     }
+
 }
