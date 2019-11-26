@@ -17,4 +17,20 @@ public class MediaParser {
             double rating = Integer.parseInt(parts[3]);
         }
     }
+
+    public static void parseSeries() throws IOException {
+        File f = new File("resources\\movies_text"); //fortæller java hvor .txt-filen er
+
+        BufferedReader br = new BufferedReader(new FileReader(f));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split("; ");
+            String title = parts[0];
+            String[] years = parts[1].split("-")
+            int startYear = Integer.parseInt(years[0]);
+            int endYear = Integer.parseInt(years[1]); //crasher sandsynligvis lige nu, da ikke alle serier har slutår
+            String[] genres = parts[2].split(", ");
+            double rating = Integer.parseInt(parts[3]);
+    }
 }
