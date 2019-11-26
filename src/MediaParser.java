@@ -19,7 +19,7 @@ public class MediaParser {
     }
 
     public static void parseSeries() throws IOException {
-        File f = new File("resources\\movies_text"); //fortæller java hvor .txt-filen er
+        File f = new File("resources\\series_text"); //fortæller java hvor .txt-filen er
 
         BufferedReader br = new BufferedReader(new FileReader(f));
 
