@@ -2,8 +2,8 @@ public class Series extends Media {
 
     private int[][] episodes;
 
-    public Series(String title, String cover, String genre, int[][] episodes) {
-        super(title, cover, genre);
+    public Series(String title, int year, String genre, float rating, int[][] episodes) {
+        super(title, year, genre, rating);
         this.episodes = episodes;
     }
 

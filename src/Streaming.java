@@ -1,4 +1,8 @@
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Streaming {
 
@@ -11,6 +15,34 @@ public class Streaming {
         users = new ArrayList<>();
         users.add(user);
         content = new ArrayList<>();
+    }
+
+    // Fylder listen med data, køres som det første i main
+    public void fillCollection() {
+        try {
+            Scanner scanner = new Scanner(new File("resources/movies_text.txt")) // Opretter ny scanner til data
+                    .useLocale(Locale.forLanguageTag("en-DK")) // Ændrer sproget som aflæses, således at kommaer kan konverteres til punktummer (ift. ratings)
+                    .useDelimiter("; |;"); // Afgrænser hvilke symboler som deler informationen op: enten "; " eller ";" (fordi datafilen er halvdårlig og ikke konsekvent med mellemrum)
+
+            // Looper gennem hver linje i tekstfilen og sætter de individuelle data til deres specifikke felt
+            while (scanner.hasNext()) {
+                String title = scanner.next().trim(); //trim-funktionen sørger for at denne String ikke har noget "whitespace", altså mellemrum eller newlines
+                int year = scanner.nextInt();
+                String genre = scanner.next().trim();
+                Float rating = scanner.nextFloat();
+
+                content.add(new Film(title, year, genre, rating)); // Tilføjer et nyt Film-objekt til listen med de aflæste værdier
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Movie text file not found!");
+        }
+    }
+
+    // Printer alle film/serier i listen til terminalen, for testing purposes
+    public void showMedia() {
+        for (Media media : content) {
+            System.out.println(media.display());
+        }
     }
 
     public ArrayList<Media> getContent() {

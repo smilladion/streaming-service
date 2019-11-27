@@ -1,25 +1,18 @@
 public class Media {
 
-    // String som type er placeholder indtil vi får lavet GUI
     private String title;
-    private String cover;
+    private int year;
     private String genre;
+    private float rating;
 
-    public Media(String title, String cover, String genre) {
+    public Media(String title, int year, String genre, float rating) {
         this.title = title;
-        this.cover = cover;
+        this.year = year;
         this.genre = genre;
+        this.rating = rating;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public String getGenre() {
-        return genre;
+    public String display() {
+        return "Name: " + title + ", Year: " + year + ", Genres: " + genre + ", Rating: " + rating;
     }
 }
