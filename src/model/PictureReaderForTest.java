@@ -5,22 +5,28 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class PictureReaderForTest {
     public static void main (String avg[]) {
     BufferedImage photo = null;
-    ArrayList<BufferedImage> picsHere = new ArrayList<>();
+    String title;
+        Map<BufferedImage, String> picFolder = new HashMap<>(1000);
+    //ArrayList<BufferedImage> picsHere = new ArrayList<>();
 
     try {
         File folder = new File("resources/pics/Film");
         File[] pics = folder.listFiles();
-        String title;
+        String picTitle;
         for (File f : pics) {
             if (f.isFile()) {
                 photo = ImageIO.read(f);
-                picsHere.add(photo);
+                picTitle = f.getName();
+                //picsHere.add(photo);
+                picFolder.put(photo,picTitle);
                 System.out.println("Cover for: " + f.getName());
             }
         }
