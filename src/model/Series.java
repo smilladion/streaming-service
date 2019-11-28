@@ -1,3 +1,5 @@
+package model;
+
 public class Series extends Media {
 
     private int[][] episodes;
