@@ -9,8 +9,10 @@ import javax.imageio.ImageIO;
 
 public class PictureReaderForTest {
     public static void main (String avg[]) throws IOException {
+    }
+}
 
-
+/*
     public void PictureReaderForTest()  {
             ArrayList<Image> pictures = new ArrayList<>();  //Opretter array
             BufferedImage img = ImageIO.read(new File("resources/pics/Film/12 Angry Men")); //Finder specifik fil
@@ -18,3 +20,4 @@ public class PictureReaderForTest {
         }
     }
 }
+
