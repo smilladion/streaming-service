@@ -1,17 +1,37 @@
 package model;
 
+import java.util.Map;
+
 public class Series extends Media {
 
-    private int[][] episodes;
+    private final Map<Integer, Integer> seasons;
 
-    public Series(String title, int year, String genre, float rating, int[][] episodes) {
+    public Series(String title, String year, String genre, float rating, Map<Integer, Integer> seasons) {
         super(title, year, genre, rating);
-        this.episodes = episodes;
+        this.seasons = seasons;
+    }
+
+    @Override
+    public String display() {
+        String seasonList = "";
+
+        for (Map.Entry<Integer, Integer> season : seasons.entrySet()) {
+            seasonList += season.getKey() + "-" + season.getValue() + ", ";
+        }
+
+        // Kompliceret alternativ til at fjerne det sidste komma (vi behøver det nok ikke siden dette er til testing)
+        /*
+        String seasonList = seasons.entrySet().stream()
+                .map(season -> season.getKey() + "-" + season.getValue())
+                .collect(Collectors.joining(", "));
+        */
+
+        return "Series name: " + title + ", Year: " + year + ", Genres: " + genre + ", Rating: " + rating + ", Seasons: " + seasonList;
     }
 
     // Antal af sæsoner
-    public int getSeasons() {
-        return 0;
+    public Map<Integer, Integer> getSeasons() {
+        return seasons;
     }
 
     // Antal episoder i en specifik sæson

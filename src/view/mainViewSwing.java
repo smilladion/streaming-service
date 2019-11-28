@@ -2,16 +2,15 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class mainViewSwing extends JFrame {
 
-    public mainViewSwing(){
+    public mainViewSwing() {
         super("mainView");
         makeFrame();
     }
 
-    private void makeFrame(){
+    private void makeFrame() {
         Container pane = getContentPane();
         JLabel label = new JLabel("hejsa");
         pane.add(label);
