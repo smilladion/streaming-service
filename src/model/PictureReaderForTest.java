@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class PictureReaderForTest {
-    public static void main (String avg[]) {
-    }
+    public static void main (String avg[]) throws IOException {
 
-    public PictureReaderForTest() throws IOException {
-        ArrayList<Image> pictures = new ArrayList<>();  //Opretter array
-        BufferedImage img = ImageIO.read(new File("resources/pics/Film/12 Angry Men")); //Finder specifik fil
-        pictures.add(img); //Tilføjer specificerede fil
+
+    public void PictureReaderForTest()  {
+            ArrayList<Image> pictures = new ArrayList<>();  //Opretter array
+            BufferedImage img = ImageIO.read(new File("resources/pics/Film/12 Angry Men")); //Finder specifik fil
+            pictures.add(img); //Tilføjer specificerede fil
+        }
     }
 }
