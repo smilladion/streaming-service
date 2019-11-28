@@ -14,7 +14,7 @@ public class PictureReaderForTest {
     public static void main (String avg[]) {
     BufferedImage photo = null;
     String title;
-        Map<BufferedImage, String> picFolder = new HashMap<>(1000);
+        Map<String, BufferedImage> picFolder = new HashMap<>(1000);
     //ArrayList<BufferedImage> picsHere = new ArrayList<>();
 
     try {
@@ -26,21 +26,21 @@ public class PictureReaderForTest {
                 photo = ImageIO.read(f);
                 picTitle = f.getName();
                 //picsHere.add(photo);
-                picFolder.put(photo,picTitle);
+                picFolder.put(picTitle,photo);
                 System.out.println("Cover for: " + f.getName());
             }
         }
     }
     catch(IOException e) {
     }
-    int i = 0;
-    System.out.println("TEST 1: ");
+    int i = 1;
+    System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
-            /*int i = 0;
-            ImageIcon image = new ImageIcon(picsHere.get(i));
+
+            ImageIcon image = new ImageIcon(picFolder.get("12 Angry Men.jpg"));
             JLabel label = new JLabel("Picture 0", image, JLabel.CENTER);
             JPanel panel = new JPanel(new BorderLayout());
-            panel.add( label, BorderLayout.CENTER );*/
+            panel.add( label, BorderLayout.CENTER );
     }
 }
 
