@@ -1,20 +1,18 @@
 package model;
 
-public class Media {
+public abstract class Media {
 
-    private String title;
-    private int year;
-    private String genre;
-    private float rating;
+    protected final String title;
+    protected final String year; // Fordi vi ikke skal sortere efter årstal lige nu er det bare et string
+    protected final String genre;
+    protected final float rating;
 
-    public Media(String title, int year, String genre, float rating) {
+    public Media(String title, String year, String genre, float rating) {
         this.title = title;
         this.year = year;
         this.genre = genre;
         this.rating = rating;
     }
 
-    public String display() {
-        return "Name: " + title + ", Year: " + year + ", Genres: " + genre + ", Rating: " + rating;
-    }
+    public abstract String display();
 }
