@@ -15,7 +15,7 @@ public class PictureReaderForTest {
     BufferedImage photo = null;
     String title;
         Map<String, BufferedImage> picFolder = new HashMap<>(1000);
-    //ArrayList<BufferedImage> picsHere = new ArrayList<>();
+
 
     try {
         File folder = new File("resources/pics/Film");
@@ -25,7 +25,6 @@ public class PictureReaderForTest {
             if (f.isFile()) {
                 photo = ImageIO.read(f);
                 picTitle = f.getName();
-                //picsHere.add(photo);
                 picFolder.put(picTitle,photo);
                 System.out.println("Cover for: " + f.getName());
             }
@@ -33,16 +32,21 @@ public class PictureReaderForTest {
     }
     catch(IOException e) {
     }
-
+    //Tester for at bekræfte om en titel er blevet lagret i hashmappet - den returner true, så det er den :)
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
+
+    //TEST HERFRA:
+
+    }
+    }
 
 
             /*ImageIcon image = new ImageIcon("resources/pics/Film/12 Angry Men.jpg");
             JLabel label = new JLabel("Picture 0", image, JLabel.CENTER);
             JPanel panel = new JPanel(new BorderLayout());
             panel.add( label, BorderLayout.CENTER );*/
-    }
-}
+
+
 
 //TEST1
 /*        File folder = new File("resources/pics/Film");
