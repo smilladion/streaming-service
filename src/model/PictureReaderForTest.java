@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class PictureReaderForTest {
-    public static void main (String avg[]) throws IOException {
+    public static void main (String avg[]) {
     }
 
     public PictureReaderForTest() throws IOException {
