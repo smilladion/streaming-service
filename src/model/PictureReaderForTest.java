@@ -33,14 +33,14 @@ public class PictureReaderForTest {
     }
     catch(IOException e) {
     }
-    int i = 1;
+
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
 
-            ImageIcon image = new ImageIcon(picFolder.get("12 Angry Men.jpg"));
+            /*ImageIcon image = new ImageIcon("resources/pics/Film/12 Angry Men.jpg");
             JLabel label = new JLabel("Picture 0", image, JLabel.CENTER);
             JPanel panel = new JPanel(new BorderLayout());
-            panel.add( label, BorderLayout.CENTER );
+            panel.add( label, BorderLayout.CENTER );*/
     }
 }
 
