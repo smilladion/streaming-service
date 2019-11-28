@@ -17,7 +17,7 @@ public class Streaming {
         content = new ArrayList<>();
     }
 
-    // Fylder listen med data, køres som det første i main
+    // Fylder listen med data, køres som det første i main. Smart!
     public void fillCollection() {
         try {
             Scanner scanner = new Scanner(new File("resources/movies_text.txt")) // Opretter ny scanner til data
