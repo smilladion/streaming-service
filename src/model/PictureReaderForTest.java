@@ -37,7 +37,7 @@ public class PictureReaderForTest {
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
-        public void forEachHash(){
+        public void forEachHash(){ //compiler ikke, da det er metode inde i metode. udenfor main metoden kan den ikke genkende hashmappet
             for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){
                 String key = e.getKey();
                 BufferedImage value = e.getValue();
