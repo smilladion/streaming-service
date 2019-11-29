@@ -14,8 +14,7 @@ import javax.swing.*;
 public class PictureReaderForTest {
     public static void main (String avg[]) {
     BufferedImage photo = null;
-    String title; //Bruger vist ikke denne alligevel, men istedet String picTitle længere nede
-        Map<String, BufferedImage> picFolder = new HashMap<>(1000);
+    Map<String, BufferedImage> picFolder = new HashMap<>(1000);
 
 
     try {
@@ -37,10 +36,16 @@ public class PictureReaderForTest {
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
-        public void forEachHash(){
+        //public void forEachHash()
             for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){
                 String key = e.getKey();
                 BufferedImage value = e.getValue();
+                JFrame frame = new JFrame();
+                frame.getContentPane().setLayout(new FlowLayout());
+                frame.getContentPane().add(new JLabel(new ImageIcon(value)));
+                frame.pack();
+                frame.setVisible(true);
+//frame.setDefaultCloseO
             }
             //eller
 
@@ -48,7 +53,7 @@ public class PictureReaderForTest {
         }
     }
 
-    }
+
 
 
             /*ImageIcon image = new ImageIcon("resources/pics/Film/12 Angry Men.jpg");
