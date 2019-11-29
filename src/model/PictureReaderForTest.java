@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -36,8 +37,17 @@ public class PictureReaderForTest {
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
+        public void forEachHash(){
+            for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){
+                String key = e.getKey();
+                BufferedImage value = e.getValue();
+            }
+            //eller
 
+
+        }
     }
+
     }
 
 
