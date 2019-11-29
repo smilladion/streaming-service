@@ -13,7 +13,7 @@ import javax.swing.*;
 public class PictureReaderForTest {
     public static void main (String avg[]) {
     BufferedImage photo = null;
-    String title;
+    String title; //Bruger vist ikke denne alligevel, men istedet String picTitle længere nede
         Map<String, BufferedImage> picFolder = new HashMap<>(1000);
 
 
@@ -26,7 +26,7 @@ public class PictureReaderForTest {
                 photo = ImageIO.read(f);
                 picTitle = f.getName();
                 picFolder.put(picTitle,photo);
-                System.out.println("Cover for: " + f.getName());
+                System.out.println("Cover for: " + f.getName()); //Tester bare et udprint af listen, skal self ikke med i den endelige kode
             }
         }
     }
@@ -35,7 +35,7 @@ public class PictureReaderForTest {
     //Tester for at bekræfte om en titel er blevet lagret i hashmappet - den returner true, så det er den :)
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
-    //TEST HERFRA:
+    //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
 
     }
     }
