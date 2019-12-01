@@ -49,13 +49,14 @@ public class PictureReaderForTest {
                 image.setHorizontalTextPosition(SwingConstants.CENTER);
                 image.setVerticalTextPosition(SwingConstants.BOTTOM);
                 frame.getContentPane().add(image);
-//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
                 //String one = "12 Angry Men.jpg"; //en string
                 //picFolder.get(one);//giver det ene billede tilhørende den String
                 //JLabel image = new JLabel(key,new ImageIcon(value),SwingConstants.CENTER);
                 //ovenstående opretter JLabel med tekst,image,tekstposition, men teksten sidder ikke rigtigt.
             }
-        frame.pack(); //viser det.
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack(); //viser det.
         frame.setVisible(true);
         }
     }
