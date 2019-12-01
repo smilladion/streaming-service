@@ -46,14 +46,14 @@ public class PictureReaderForTest {
 
 
 
-        for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til panel
-            String key = e.getKey();
-            BufferedImage value = e.getValue();
-            JLabel image = new JLabel(new ImageIcon(value));
-            image.setText(key);
-            image.setHorizontalTextPosition(SwingConstants.CENTER);
-            image.setVerticalTextPosition(SwingConstants.BOTTOM);
-            panel.add(image);
+        for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //foreach loop for Hashmap
+            String key = e.getKey(); //henter nøglen
+            BufferedImage value = e.getValue(); //henter den tilknyttede value
+            JLabel image = new JLabel(new ImageIcon(value));//laver en JLabel indeholdende imageicon, med billedet
+            image.setText(key); //sætter billedets text til den valgte nøgle
+            image.setHorizontalTextPosition(SwingConstants.CENTER);//gør at teksten befinder sig i midten
+            image.setVerticalTextPosition(SwingConstants.BOTTOM); //at den befinder sig under billedet
+            panel.add(image); //tilføjer billedet til vores JPanel.
 
             //String one = "12 Angry Men.jpg"; //en string
             //picFolder.get(one);//giver det ene billede tilhørende den String
