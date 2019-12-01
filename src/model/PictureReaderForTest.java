@@ -20,6 +20,8 @@ public class PictureReaderForTest {
         picFolder = new HashMap<>(1000);
     }
 
+
+
     public static void loadHash() throws IOException {
             File folder = new File("resources/pics/Film");
             File[] pics = folder.listFiles();
@@ -36,7 +38,12 @@ public class PictureReaderForTest {
 
     public static void showHash(){
         JFrame frame = new JFrame();
-        frame.getContentPane().setLayout(new FlowLayout()); //kreerer flowlayout jframe
+        JPanel panel = new JPanel();
+        panel.setLayout(new WrapLayout());
+        JScrollPane scrollBar=new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        frame.add(scrollBar);
+
+
 
         for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til JFrame
             String key = e.getKey();
@@ -45,7 +52,7 @@ public class PictureReaderForTest {
             image.setText(key);
             image.setHorizontalTextPosition(SwingConstants.CENTER);
             image.setVerticalTextPosition(SwingConstants.BOTTOM);
-            frame.getContentPane().add(image);
+            panel.add(image);
 
             //String one = "12 Angry Men.jpg"; //en string
             //picFolder.get(one);//giver det ene billede tilhørende den String
@@ -59,6 +66,7 @@ public class PictureReaderForTest {
 
 
     public static void main (String avg[]) throws IOException {
+
     try {
         loadHash();
         showHash();
@@ -107,22 +115,5 @@ public class PictureReaderForTest {
 
 
 
-//TEST1
-/*        File folder = new File("resources/pics/Film");
-        File[] pics = folder.listFiles();
-        for (File f: pics) {
-            if (f.isFile()) {
-                System.out.println("File " + f.getName());
-            }
-        }*/
-//TEST2
-/*
-    public void PictureReaderForTest()  {
-            ArrayList<Image> pictures = new ArrayList<>();  //Opretter array
-            BufferedImage img = ImageIO.read(new File("resources/pics/Film/12 Angry Men")); //Finder specifik fil
-            pictures.add(img); //Tilføjer specificerede fil
-        }
-    }
-}
-*/
+
 
