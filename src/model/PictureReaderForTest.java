@@ -44,7 +44,7 @@ public class PictureReaderForTest {
                 String key = e.getKey();
                 BufferedImage value = e.getValue();
 
-                frame.getContentPane().add(new JLabel(new ImageIcon(value)));
+                frame.getContentPane().add(new JLabel(key,new ImageIcon(value),SwingConstants.LEFT));
 //frame.setDefaultCloseO
                 //String one = "12 Angry Men.jpg"; //en string
                 //picFolder.get(one);//giver det ene billede tilhørende den String
