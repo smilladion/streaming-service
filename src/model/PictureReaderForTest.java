@@ -28,7 +28,7 @@ public class PictureReaderForTest {
                     photo = ImageIO.read(f);
                     picTitle = f.getName();
                     picFolder.put(picTitle,photo);
-                    System.out.println("Cover for: " + f.getName()); //Tester bare et udprint af listen, skal self ikke med i den endelige kode
+                    System.out.println("Cover for: " + f.getName()); //Tester bare et udprint af listen, TODO skal fjernes fra den endelige kode
                 }
             }
         }
@@ -36,14 +36,17 @@ public class PictureReaderForTest {
     public static void showHash(){
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-        panel.setLayout(new WrapLayout());
+        panel.setLayout(new WrapLayout()); //Sætter layout for panel til custom WrapLayout
+        /*Opretter scrollbar. Bemærk at alt det, som skal kunne scrolles igennem
+        (dvs. vores JPanel panel, som indeholder Media content) indsættes i scrollbaren som et argument den tager.
+        Derved bliver panel så også tilføjet til frame idet at scrollbaren bliver tilføjet til frame:*/
         JScrollPane scrollBar=new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollBar.getVerticalScrollBar().setUnitIncrement(16);
-        frame.add(scrollBar);
+        scrollBar.getVerticalScrollBar().setUnitIncrement(16); //Sætter scroll-hastigheden op
+        frame.add(scrollBar); //Tilføjer scrollbar til frame
 
 
 
-        for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til JFrame
+        for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til panel
             String key = e.getKey();
             BufferedImage value = e.getValue();
             JLabel image = new JLabel(new ImageIcon(value));
@@ -74,8 +77,7 @@ public class PictureReaderForTest {
     }
 }
 
-    //Tester for at bekræfte om en titel er blevet lagret i hashmappet - den returner true, så det er den :)
-    //System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
+
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
         //TODO ryk det her over i view på et senere tidspunkt, så det køres defra.
