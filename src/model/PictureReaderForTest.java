@@ -43,12 +43,16 @@ public class PictureReaderForTest {
             for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til JFrame
                 String key = e.getKey();
                 BufferedImage value = e.getValue();
-
-                frame.getContentPane().add(new JLabel(key,new ImageIcon(value),SwingConstants.LEFT));
-//frame.setDefaultCloseO
+                JLabel image = new JLabel(new ImageIcon(value));
+                image.setText(key);
+                image.setHorizontalTextPosition(SwingConstants.CENTER);
+                image.setVerticalTextPosition(SwingConstants.BOTTOM);
+                frame.getContentPane().add(image);
+//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 //String one = "12 Angry Men.jpg"; //en string
                 //picFolder.get(one);//giver det ene billede tilhørende den String
-
+                //JLabel image = new JLabel(key,new ImageIcon(value),SwingConstants.CENTER);
+                //ovenstående opretter JLabel med tekst,image,tekstposition, men teksten sidder ikke rigtigt.
             }
         frame.pack(); //viser det.
         frame.setVisible(true);
