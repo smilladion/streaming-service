@@ -36,20 +36,56 @@ public class PictureReaderForTest {
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
-        /*public void forEachHash() //iterater-metode: obs viser 100 billeder. USE WITH CAUTION!!!!!!
-            for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){
-                String key = e.getKey();
-                BufferedImage value = e.getValue();*/
-        //frame.setDefaultCloseO //viser den givne titel for værdi i String one:
-                String one = "12 Angry Men.jpg"; //en string
-                BufferedImage value = picFolder.get(one);//giver det ene billede tilhørende den String
-                JFrame frame = new JFrame();
-                frame.getContentPane().setLayout(new FlowLayout());
-                frame.getContentPane().add(new JLabel(new ImageIcon(value)));
-                frame.pack();
-                frame.setVisible(true);
-            }
-        }
-    //}
+        //TODO ryk det her over i view på et senere tidspunkt, så det køres defra.
+        //public void forEachHash() //obs viser 100 billeder. USE WITH CAUTION!!!!!!
+        JFrame frame = new JFrame();
+        frame.getContentPane().setLayout(new FlowLayout()); //kreerer flowlayout jframe
 
+            for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til JFrame
+                String key = e.getKey();
+                BufferedImage value = e.getValue();
+                JLabel image = new JLabel(new ImageIcon(value));
+                image.setText(key);
+                image.setHorizontalTextPosition(SwingConstants.CENTER);
+                image.setVerticalTextPosition(SwingConstants.BOTTOM);
+                frame.getContentPane().add(image);
+//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                //String one = "12 Angry Men.jpg"; //en string
+                //picFolder.get(one);//giver det ene billede tilhørende den String
+                //JLabel image = new JLabel(key,new ImageIcon(value),SwingConstants.CENTER);
+                //ovenstående opretter JLabel med tekst,image,tekstposition, men teksten sidder ikke rigtigt.
+            }
+        frame.pack(); //viser det.
+        frame.setVisible(true);
+        }
+    }
+
+
+
+
+            /*ImageIcon image = new ImageIcon("resources/pics/Film/12 Angry Men.jpg");
+            JLabel label = new JLabel("Picture 0", image, JLabel.CENTER);
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add( label, BorderLayout.CENTER );*/
+
+
+
+//TEST1
+/*        File folder = new File("resources/pics/Film");
+        File[] pics = folder.listFiles();
+        for (File f: pics) {
+            if (f.isFile()) {
+                System.out.println("File " + f.getName());
+            }
+        }*/
+//TEST2
+/*
+    public void PictureReaderForTest()  {
+            ArrayList<Image> pictures = new ArrayList<>();  //Opretter array
+            BufferedImage img = ImageIO.read(new File("resources/pics/Film/12 Angry Men")); //Finder specifik fil
+            pictures.add(img); //Tilføjer specificerede fil
+        }
+    }
+}
+*/
 
