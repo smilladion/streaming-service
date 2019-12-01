@@ -20,7 +20,7 @@ public class PictureReaderForTest {
 
 
     public static void loadHash() throws IOException {
-            File folder = new File("resources/pics/Film");
+            File folder = new File("resources/pics/Film"); //TODO viser kun billeder+tekst for film atm, skal også vise for serier
             File[] pics = folder.listFiles();
             String picTitle;
             for (File f : pics) {
