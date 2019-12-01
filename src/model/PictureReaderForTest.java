@@ -37,18 +37,21 @@ public class PictureReaderForTest {
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
         //public void forEachHash() //obs viser 100 billeder. USE WITH CAUTION!!!!!!
-            for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){
+        JFrame frame = new JFrame();
+        frame.getContentPane().setLayout(new FlowLayout()); //kreerer flowlayout jframe
+
+            for(Map.Entry<String, BufferedImage> e : picFolder.entrySet()){ //tilføjer hvert billede til JFrame
                 String key = e.getKey();
                 BufferedImage value = e.getValue();
-                JFrame frame = new JFrame();
-                frame.getContentPane().setLayout(new FlowLayout());
+
                 frame.getContentPane().add(new JLabel(new ImageIcon(value)));
-                frame.pack();
-                frame.setVisible(true);
 //frame.setDefaultCloseO
-                String one = "12 Angry Men.jpg"; //en string
-                picFolder.get(one);//giver det ene billede tilhørende den String
+                //String one = "12 Angry Men.jpg"; //en string
+                //picFolder.get(one);//giver det ene billede tilhørende den String
+
             }
+        frame.pack(); //viser det.
+        frame.setVisible(true);
         }
     }
 
