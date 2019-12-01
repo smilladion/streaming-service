@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WrapLayout extends FlowLayout implements LayoutManager
-{
+{ //TODO Tilføj kildelink, to avoid plagiat-strike
     private Dimension preferredLayoutSize;
 
     /**

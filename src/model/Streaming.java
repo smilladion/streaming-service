@@ -86,7 +86,7 @@ public class Streaming {
         return content;
     }
 
-    // Sorterer medierne efter film/serie (evt. ved brug af instanceof if-statements)
+    //TODO Sorterer medierne efter film/serie (evt. ved brug af instanceof if-statements)
     public void sortType(String type) {
 
     }
