@@ -36,6 +36,7 @@ public class PictureReaderForTest {
     System.out.println("TEST 1: "+picFolder.containsKey("12 Angry Men.jpg"));
 
     //TEST FOR AT FÅ VIST BILLED FRA HASHMAP HERFRA:
+        //TODO ryk det her over i view på et senere tidspunkt, så det køres defra.
         //public void forEachHash() //obs viser 100 billeder. USE WITH CAUTION!!!!!!
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout()); //kreerer flowlayout jframe
