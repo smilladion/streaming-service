@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public class mainViewSwing extends JFrame {
 
@@ -25,4 +27,8 @@ public class mainViewSwing extends JFrame {
         setVisible(true);
     }
 
+
+
+
 }
+
