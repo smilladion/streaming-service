@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class WrapLayout extends FlowLayout implements LayoutManager
 {
-    //http://www.camick.com/java/source/WrapLayout.java
+    //SOURCE: http://www.camick.com/java/source/WrapLayout.java
     private Dimension preferredLayoutSize;
 
     /**
