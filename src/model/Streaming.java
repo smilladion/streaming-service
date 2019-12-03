@@ -1,7 +1,10 @@
 package model;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class Streaming {
@@ -17,12 +20,19 @@ public class Streaming {
         content = new ArrayList<>();
     }
 
-    // Fylder listen med data, køres som det første i main. Smart!
+    public ArrayList<Media> getContent() {
+        return content;
+    }
+
+    // Fylder listen med data, køres som det første når et Streaming-objekt oprettes (sammen med fillSeries()).
     public void fillMovies() {
         try {
             Scanner scanner = new Scanner(new File("resources/movies_text.txt")) // Opretter ny scanner til data
                     .useLocale(Locale.forLanguageTag("en-DK")) // Ændrer sproget som aflæses, således at kommaer kan konverteres til punktummer (ift. ratings)
                     .useDelimiter("; |;"); // Afgrænser hvilke symboler som deler informationen op: enten "; " eller ";" (fordi datafilen er halvdårlig og ikke konsekvent med mellemrum)
+
+            File folder = new File("resources/pics/Film");
+            File[] pics = folder.listFiles(); // Array med billedfiler til cover
 
             // Looper gennem hver linje i tekstfilen og sætter de individuelle data til deres specifikke felt
             while (scanner.hasNext()) {
@@ -30,11 +40,30 @@ public class Streaming {
                 String year = scanner.next().trim();
                 String genre = scanner.next().trim();
                 float rating = scanner.nextFloat();
+                BufferedImage cover = null;
 
-                content.add(new Film(title, year, genre, rating)); // Tilføjer et nyt Film-objekt til listen med de aflæste værdier
+                // Tilføjer billedet til cover hvis dens filnavn indeholder filmens titel
+                for (File pic : pics) {
+                    if (pic.isFile()) {
+                        if (pic.getName().contains(title)) {
+                            cover = ImageIO.read(pic);
+                        }
+                    }
+                }
+
+                // Kaster en exception hvis der ikke blev fundet et matchende cover til denne film
+                if (cover == null) {
+                    throw new NullPointerException("No photo matched the media: " + title);
+                } else {
+                    content.add(new Film(title, year, genre, rating, cover)); // Tilføjer et nyt Film-objekt til listen med de aflæste værdier
+                }
             }
         } catch (FileNotFoundException e) {
             System.err.println("Movie text file not found!");
+        } catch (IOException e) {
+            System.err.println("Could not read the image file!");
+        } catch (NullPointerException e) {
+            System.err.print(e.getMessage());
         }
     }
 
@@ -43,6 +72,9 @@ public class Streaming {
             Scanner scanner = new Scanner(new File("resources/series_text.txt"))
                     .useLocale(Locale.forLanguageTag("en-DK"))
                     .useDelimiter("; |;");
+
+            File folder = new File("resources/pics/Series");
+            File[] pics = folder.listFiles();
 
             while (scanner.hasNext()) {
                 Map<Integer, Integer> seasons = new HashMap<>(10);
@@ -66,58 +98,39 @@ public class Streaming {
                     seasons.put(season, episodes); // Mapper endelig de to værdier til hinanden og tilføjer til hashmappen
                 }
 
-                content.add(new Series(title, year, genre, rating, seasons));
+                BufferedImage cover = null;
+
+                for (File pic : pics) {
+                    if (pic.isFile()) {
+                        if (pic.getName().contains(title)) {
+                            cover = ImageIO.read(pic);
+                        }
+                    }
+                }
+
+                if (cover == null) {
+                    throw new NullPointerException("No photo matched the media: " + title);
+                } else {
+                    content.add(new Series(title, year, genre, rating, cover, seasons));
+                }
             }
         } catch (FileNotFoundException e) {
             System.err.println("Series text file not found!");
         } catch (NumberFormatException e) {
             System.err.println("Invalid season or episode value!");
+        } catch (IOException e) {
+            System.err.println("Could not read the image file!");
+        } catch (NullPointerException e) {
+            System.err.print(e.getMessage());
         }
     }
 
     // Printer alle film/serier i listen til terminalen, for testing purposes
-    public void showMedia() {
+    public void printMedia() {
         for (Media media : content) {
             System.out.println(media.display());
         }
     }
-
-    public ArrayList<Media> getContent() {
-        return content;
-    }
-
-    //TODO Sorterer medierne efter film/serie (evt. ved brug af instanceof if-statements)
-    public void sortType(String type) {
-
-    }
-
-    // Sorterer medierne efter den valgte genre
-    public void sortGenre(String genre) {
-
-    }
-
-    // Søger efter medier gennem titler
-    public void searchTitle(String title) {
-
-    }
-
-    // Afspiller ikke "rigtigt", men viser noget simpelt hvis brugeren forsøger at afspille
-    public void playMedia() {
-
-    }
-
-    // Tilføjer ny bruger til listen, evt. med restriktioner på hvor mange man kan tilføje
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    // Fjerner en bestemt bruger fra listen, evt. med restriktion på at man ikke kan slette den primære bruger
-    public void removeUser(User user) {
-
-    }
-
-    // Skift ens primære bruger til at være en ny fra brugerlisten (users)
-    public void changeUser(User user) {
-
-    }
 }
+
+// TODO Tjek designfasen i Docs for andre metoder der skal implementeres!

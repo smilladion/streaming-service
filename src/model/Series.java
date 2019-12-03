@@ -1,13 +1,14 @@
 package model;
 
+import java.awt.image.BufferedImage;
 import java.util.Map;
 
 public class Series extends Media {
 
     private final Map<Integer, Integer> seasons;
 
-    public Series(String title, String year, String genre, float rating, Map<Integer, Integer> seasons) {
-        super(title, year, genre, rating);
+    public Series(String title, String year, String genre, float rating, BufferedImage cover, Map<Integer, Integer> seasons) {
+        super(title, year, genre, rating, cover);
         this.seasons = seasons;
     }
 
@@ -29,13 +30,7 @@ public class Series extends Media {
         return "Series name: " + title + ", Year: " + year + ", Genres: " + genre + ", Rating: " + rating + ", Seasons: " + seasonList;
     }
 
-    // Antal af sæsoner
     public Map<Integer, Integer> getSeasons() {
         return seasons;
-    }
-
-    // Antal episoder i en specifik sæson
-    public int getEpisodes(int season) {
-        return 0;
     }
 }

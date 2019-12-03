@@ -1,14 +1,9 @@
-import model.Streaming;
-import model.User;
+import view.Display;
 
 public class Main {
 
     public static void main(String[] args) {
-        Streaming service = new Streaming(new User("Bob"));
-
-        service.fillMovies();
-        service.fillSeries();
-
-        service.showMedia();
+        Display display = new Display();
+        display.showMedia();
     }
 }

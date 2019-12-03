@@ -13,28 +13,29 @@ public class PictureReaderForTest {
     public static Map<String, BufferedImage> picFolder = new HashMap<>(1000);
 
     public static void loadHash() throws IOException {
-            File folder = new File("resources/pics/Film"); //TODO viser kun billeder+tekst for film atm, skal også vise for serier
-            File[] pics = folder.listFiles();
-            String picTitle;
-            for (File f : pics) {
-                if (f.isFile()) {
-                    photo = ImageIO.read(f);
-                    picTitle = f.getName();
-                    picFolder.put(picTitle,photo);
-                    System.out.println("Cover for: " + f.getName()); //Tester bare et udprint af listen, TODO skal fjernes fra den endelige kode
-                }
+        File folder = new File("resources/pics/Film"); //TODO viser kun billeder+tekst for film atm, skal også vise for serier
+        File[] pics = folder.listFiles();
+        String picTitle;
+        for (File f : pics) {
+            if (f.isFile()) {
+                photo = ImageIO.read(f);
+                picTitle = f.getName();
+                picFolder.put(picTitle,photo);
+                System.out.println("Cover for: " + f.getName()); //Tester bare et udprint af listen, TODO skal fjernes fra den endelige kode
             }
         }
+    }
 
     public static void showHash(){
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         panel.setLayout(new WrapLayout());
         panel.setLayout(new WrapLayout()); //Sætter layout for panel til custom WrapLayout
+
         /*Opretter scrollbar. Bemærk at alt det, som skal kunne scrolles igennem
         (dvs. vores JPanel panel, som indeholder Media content) indsættes i scrollbaren som et argument den tager.
         Derved bliver panel så også tilføjet til frame idet at scrollbaren bliver tilføjet til frame:*/
-        JScrollPane scrollBar=new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollBar = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollBar.getVerticalScrollBar().setUnitIncrement(16); //Sætter scroll-hastigheden op
         frame.add(scrollBar); //Tilføjer scrollbar til frame
 
