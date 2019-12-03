@@ -12,13 +12,6 @@ public class PictureReaderForTest {
     public static BufferedImage photo = null;
     public static Map<String, BufferedImage> picFolder = new HashMap<>(1000);
 
-    public PictureReaderForTest(){
-        photo = null;
-        picFolder = new HashMap<>(1000);
-    }
-
-
-
     public static void loadHash() throws IOException {
             File folder = new File("resources/pics/Film"); //TODO viser kun billeder+tekst for film atm, skal også vise for serier
             File[] pics = folder.listFiles();
@@ -37,7 +30,7 @@ public class PictureReaderForTest {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         panel.setLayout(new WrapLayout());
-        JScrollPane scrollBar=new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollBar = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollBar.getVerticalScrollBar().setUnitIncrement(16);
         frame.add(scrollBar);
 
@@ -65,12 +58,12 @@ public class PictureReaderForTest {
 
     public static void main (String avg[]) throws IOException {
 
-    try {
-        loadHash();
-        showHash();
-    }
-    catch(IOException e) {
-    }
+        try {
+            loadHash();
+            showHash();
+        }
+        catch(IOException e) {
+        }
     }
 }
 
