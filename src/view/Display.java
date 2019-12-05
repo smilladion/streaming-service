@@ -97,7 +97,7 @@ public class Display {
         buttonPanel.add(homepage);
         frame.setVisible(true);
 
-        homepage.addActionListener(e-> showMedia());//TODO virker ikke
+        homepage.addActionListener(e-> showMedia());//TODO virker
         fav.addActionListener(e -> showFavourites()); //TODO hvor skal vores actionlisteners være??
     }
 
