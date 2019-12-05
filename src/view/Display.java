@@ -60,6 +60,7 @@ public class Display {
         // Fylder content-listen med data.
         service.fillMovies();
         service.fillSeries();
+        favPanel.setVisible(false);
     }
 
     // Viser indholdet af contents-listen på skærmen.
@@ -160,8 +161,8 @@ public class Display {
         fav.addActionListener(e -> {
             if(getCurrentPanel()!=favPanel) {//sætter current pane visibillity til false, hvis current pane ikke er knap
                 getCurrentPanel().setVisible(false);
-                favPanel.setVisible(true); //TODO virker ikke ved første opstart?? man kan ikke trykke på favourites knappen. homepage skal trykkes først
-            }                               //TODO probably fordi fav er visible fra start, hviklet den ikke burde være
+                favPanel.setVisible(true);
+            }
         });                  //TODO hvor skal vores actionlisteners være??
     }
 
