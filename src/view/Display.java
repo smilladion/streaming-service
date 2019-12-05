@@ -81,7 +81,7 @@ public class Display {
 
         for(Media m : service.getContent()) {
 
-            if (m.getTitle().contains(txt)) {
+            if (m.getTitle().toLowerCase().contains(txt.toLowerCase())) {
                 results.add(m);
             }
         }
