@@ -131,7 +131,11 @@ public class Display {
 
         JTextField findText = new JTextField(20); //Virker kun med titler lige nu
         JButton search2 = new JButton("Search");
+        search2.setForeground(Color.WHITE);
+        search2.setBackground(Color.BLACK);
         JButton endSearch = new JButton("End search"); //Kan ikke finde på anden måde at få resultPanel væk igen
+        endSearch.setForeground(Color.WHITE);
+        endSearch.setBackground(Color.BLACK);
 
 
         buttonPanel.add(findText);//TODO DITTES TEST
