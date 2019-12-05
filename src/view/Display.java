@@ -99,8 +99,10 @@ public class Display {
 
     public void clearResults()  {
         results.removeAll(results);
+        resultPanel.removeAll();
+        resultPanel.repaint();
         resultPanel.setVisible(false);
-    } //Denne metode lader ikke til at virke; alle tidligere søgeresultater bliver fortsat gemt i results
+    }
 
 
     // TODO Måske typen af medie (film/serie) og genre skal være to forskellige dropdowns? (Så man kan sortere medie OG genre samtidigt)
