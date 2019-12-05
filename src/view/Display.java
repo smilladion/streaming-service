@@ -79,7 +79,7 @@ public class Display {
     public void showResults(String txt)   {
 
         for(Media m : service.getContent()) {
-            if (m.getTitle().equals(txt)) {
+            if (m.getTitle().contains(txt)) {
                 results.add(m);
             }
         }
@@ -127,7 +127,7 @@ public class Display {
         homepage.setForeground(Color.WHITE);
         homepage.setBackground(Color.BLACK);
 
-        JTextField findText = new JTextField(20); //Case-sensitive! Fungerer kun med eksakt søgning, f.eks. "The Godfather", IKKE "the godfather"
+        JTextField findText = new JTextField(20); //Virker kun med titler lige nu
         JButton search2 = new JButton("Search");
         JButton endSearch = new JButton("End search"); //Kan ikke finde på anden måde at få resultPanel væk igen
 
