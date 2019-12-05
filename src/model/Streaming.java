@@ -24,6 +24,8 @@ public class Streaming {
         return content;
     }
 
+    public User getPrimary(){return primary; }
+
     // Fylder listen med data, køres som det første når et Streaming-objekt oprettes (sammen med fillSeries()).
     public void fillMovies() {
         try {
