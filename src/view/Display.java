@@ -18,6 +18,7 @@ public class Display {
     private JPanel buttonPanel;
     private JPanel favPanel; //TODO TEST
 
+
     public Display() {
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -37,7 +38,8 @@ public class Display {
         /*Opretter scrollbar. Bemærk at alt det, som skal kunne scrolles igennem
         (dvs. vores JPanel panel, som indeholder Media content) indsættes i scrollbaren som et argument den tager.
         Derved bliver panel så også tilføjet til frame idet at scrollbaren bliver tilføjet til frame:*/
-        JScrollPane scrollBar = new JScrollPane(mediaPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollBar = new JScrollPane(mediaPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        //TODO skal på en eller anden måde også tilføje favPanel her med scrollbartingen, ellers bliver det ikke vist
         //JScrollPane scrollBar1 = new JScrollPane(favPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//TODO TEST
         scrollBar.getVerticalScrollBar().setUnitIncrement(16); // Sætter scroll-hastigheden op.
         //scrollBar1.getVerticalScrollBar().setUnitIncrement(16); // Sætter scroll-hastigheden op.//TODO test
@@ -55,7 +57,7 @@ public class Display {
     }
 
     // Viser indholdet af contents-listen på skærmen.
-    public void showMedia() {
+    public void showMedia() { //køres ved opstart
         for (Media media : service.getContent()) {
             JLabel image = new JLabel(new ImageIcon(media.getCover())); // Laver en JLabel indeholdende ImageIcon, med billedet.
             image.setText(media.getTitle()); // Sætter billedets tekst til dens titel
@@ -95,17 +97,34 @@ public class Display {
         buttonPanel.add(sort);
         buttonPanel.add(search);
         buttonPanel.add(homepage);
-        frame.setVisible(true);
+        frame.setVisible(true); 
 
-        homepage.addActionListener(e-> mediaPanel.setVisible(true));
+        homepage.addActionListener(e -> {
+            if(getCurrentPanel()!=mediaPanel) {
+                getCurrentPanel().setVisible(false);
+                mediaPanel.setVisible(true);
+            }
+        });
         fav.addActionListener(e -> {
-            mediaPanel.setVisible(false);
-            favPanel.setVisible(true);
+            if(getCurrentPanel()!=favPanel) {//sætter current pane visibillity til false, hvis current pane ikke er knap
+                getCurrentPanel().setVisible(false);
+                favPanel.setVisible(true); //TODO virker ikke ved første opstart?? man kan ikke trykke på favourites knappen. homepage skal trykkes først
+            }                               //TODO probably fordi fav er visible fra start, hviklet den ikke burde være
         });                  //TODO hvor skal vores actionlisteners være??
     }
 
-    public void showFavourites(){
+    public JPanel getCurrentPanel(){//returnerer det pane der bliver vist atm.
+        if(favPanel.isVisible()){ return favPanel; }
+        else {return mediaPanel;}
+        //if(mediaPanel.isVisible())   //kode til når de andre knapper tilføjes
+        //else if(userPanel.isVisible()){return userPanel;}
+       // else if(sortPanel.isVisible()){return sortPanel;}
+       // else{return searchPanel;}
+    }
+
+    public void showFavourites() {
         service.getPrimary().addFavourite(service.getContent().get(1));
+        service.getPrimary().addFavourite(service.getContent().get(2));
         for (Media media : service.getPrimary().getFavourites()) {
             JLabel image = new JLabel(new ImageIcon(media.getCover())); // Laver en JLabel indeholdende ImageIcon, med billedet.
             image.setText(media.getTitle()); // Sætter billedets tekst til dens titel
@@ -114,8 +133,6 @@ public class Display {
             image.setForeground(Color.WHITE);
             favPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
         }
-    mediaPanel.setVisible(false);
-        favPanel.setVisible(true);
     }
 }
 
