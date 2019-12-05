@@ -32,7 +32,7 @@ public class Display {
         results = new ArrayList<Media>();
 
         mediaPanel.setBackground(new Color(31, 31, 31));
-        favPanel.setBackground(new Color(31, 31, 31)); //favPanel //TODO TEST
+        favPanel.setBackground(new Color(30, 31, 31)); //favPanel //TODO TEST
         buttonPanel.setSize(300, 100);
         buttonPanel.setBackground(Color.BLACK);
 
