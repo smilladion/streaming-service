@@ -97,8 +97,11 @@ public class Display {
         buttonPanel.add(homepage);
         frame.setVisible(true);
 
-        homepage.addActionListener(e-> mediaPanel.setVisible(true));//TODO virker
-        fav.addActionListener(e -> showFavourites()); //TODO hvor skal vores actionlisteners være??
+        homepage.addActionListener(e-> mediaPanel.setVisible(true));
+        fav.addActionListener(e -> {
+            mediaPanel.setVisible(false);
+            favPanel.setVisible(true);
+        });                  //TODO hvor skal vores actionlisteners være??
     }
 
     public void showFavourites(){
