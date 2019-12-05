@@ -4,11 +4,12 @@ import javafx.scene.layout.BorderRepeat;
 import model.Media;
 import model.Streaming;
 import model.User;
-import model.WrapLayout;
+import view.WrapLayout;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Display {
 
@@ -17,6 +18,8 @@ public class Display {
     private JPanel mediaPanel;
     private JPanel buttonPanel;
     private JPanel favPanel; //TODO TEST
+    private JPanel resultPanel;
+    private ArrayList<Media> results;
 
 
     public Display() {
@@ -25,6 +28,8 @@ public class Display {
         mediaPanel = new JPanel(new WrapLayout(WrapLayout.CENTER, 20, 20)); // Sætter layout for mediapanel til custom WrapLayout.
         favPanel = new JPanel(new WrapLayout(WrapLayout.CENTER, 20, 20)); // Sætter layout for favpanel til custom WrapLayout.//TODO TEST
         buttonPanel = new JPanel();
+        resultPanel = new JPanel();
+        results = new ArrayList<Media>();
 
         mediaPanel.setBackground(new Color(31, 31, 31));
         favPanel.setBackground(new Color(31, 31, 31)); //favPanel //TODO TEST
@@ -34,6 +39,7 @@ public class Display {
         frame.add(mediaPanel, BorderLayout.SOUTH);
         frame.add(favPanel, BorderLayout.SOUTH); //favPanel //TODO TEST
         frame.add(buttonPanel, BorderLayout.NORTH);
+        frame.add(resultPanel, BorderLayout.SOUTH);
 
         /*Opretter scrollbar. Bemærk at alt det, som skal kunne scrolles igennem
         (dvs. vores JPanel panel, som indeholder Media content) indsættes i scrollbaren som et argument den tager.
@@ -70,6 +76,33 @@ public class Display {
         frame.setVisible(true);
     }
 
+    public void showResults(String txt)   {
+
+        for(Media m : service.getContent()) {
+            if (m.getTitle().equals(txt)) {
+                results.add(m);
+            }
+        }
+
+        for (Media media : results) {
+        JLabel image = new JLabel(new ImageIcon(media.getCover())); // Laver en JLabel indeholdende ImageIcon, med billedet.
+        image.setText(media.getTitle()); // Sætter billedets tekst til dens titel
+        image.setHorizontalTextPosition(SwingConstants.CENTER); // Gør at teksten befinder sig i midten
+        image.setVerticalTextPosition(SwingConstants.BOTTOM); // ... og under billedet
+        image.setForeground(Color.WHITE);
+        resultPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
+    }
+
+        resultPanel.setVisible(true);
+        frame.setVisible(true);
+    }
+
+    public void clearResults()  {
+        results.removeAll(results);
+        resultPanel.setVisible(false);
+    } //Denne metode lader ikke til at virke; alle tidligere søgeresultater bliver fortsat gemt i results
+
+
     // TODO Måske typen af medie (film/serie) og genre skal være to forskellige dropdowns? (Så man kan sortere medie OG genre samtidigt)
     public void showButtons() {
         JButton user = new JButton("User");
@@ -92,12 +125,29 @@ public class Display {
         homepage.setForeground(Color.WHITE);
         homepage.setBackground(Color.BLACK);
 
+        JTextField findText = new JTextField(20); //Case-sensitive! Fungerer kun med eksakt søgning, f.eks. "The Godfather", IKKE "the godfather"
+        JButton search2 = new JButton("Search");
+        JButton endSearch = new JButton("End search"); //Kan ikke finde på anden måde at få resultPanel væk igen
+
+
+        buttonPanel.add(findText);//TODO DITTES TEST
+        buttonPanel.add(search2);//TODO DITTES TEST
+        buttonPanel.add(endSearch);
+
         buttonPanel.add(user);
         buttonPanel.add(fav);
         buttonPanel.add(sort);
-        buttonPanel.add(search);
+        //buttonPanel.add(search);
         buttonPanel.add(homepage);
-        frame.setVisible(true); 
+        frame.setVisible(true);
+
+        findText.addActionListener(e-> {
+            showResults(findText.getText());
+        });
+        search2.addActionListener(e-> {
+            showResults(findText.getText());
+        });
+        endSearch.addActionListener(e-> {clearResults();});
 
         homepage.addActionListener(e -> {
             if(getCurrentPanel()!=mediaPanel) {

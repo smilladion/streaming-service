@@ -133,6 +133,8 @@ public class Streaming {
             System.out.println(media.display());
         }
     }
+
+
 }
 
 // TODO Tjek designfasen i Docs for andre metoder der skal implementeres!

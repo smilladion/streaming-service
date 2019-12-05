@@ -7,5 +7,6 @@ public class Main {
         display.showFavourites();
         display.showMedia();
         display.showButtons();
+
     }
 }

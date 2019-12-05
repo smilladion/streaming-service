@@ -12,6 +12,10 @@ public class Series extends Media {
         this.seasons = seasons;
     }
 
+    public String getTitle()    {
+        return title;
+    }
+
     @Override
     public String display() {
         String seasonList = "";
