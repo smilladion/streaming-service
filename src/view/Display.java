@@ -27,12 +27,9 @@ public class Display {
         frame.setLayout(new BorderLayout());
         mediaPanel = new JPanel(new WrapLayout(WrapLayout.CENTER, 20, 20)); // Sætter layout for mediapanel til custom WrapLayout.
         favPanel = new JPanel(new WrapLayout(WrapLayout.CENTER, 20, 20)); // Sætter layout for favpanel til custom WrapLayout.//TODO TEST
-        favPanel.setVisible(false);
         buttonPanel = new JPanel();
         resultPanel = new JPanel();
         results = new ArrayList<Media>();
-
-        favPanel.setVisible(false);
 
         mediaPanel.setBackground(new Color(31, 31, 31));
         favPanel.setBackground(new Color(31, 31, 31)); //favPanel //TODO TEST
@@ -82,7 +79,7 @@ public class Display {
     public void showResults(String txt)   {
 
         for(Media m : service.getContent()) {
-            if (m.getTitle().equals(txt)) { //TODO eventuelt lave .contains() i stedet, så den viser fx ting der indehold er"the" eller andet.
+            if (m.getTitle().equals(txt)) {
                 results.add(m);
             }
         }
@@ -101,9 +98,11 @@ public class Display {
     }
 
     public void clearResults()  {
-        results.clear();
+        results.removeAll(results);
+        resultPanel.removeAll();
+        resultPanel.repaint();
         resultPanel.setVisible(false);
-    } //TODO Denne metode lader ikke til at virke; alle tidligere søgeresultater bliver fortsat gemt i results
+    }
 
 
     // TODO Måske typen af medie (film/serie) og genre skal være to forskellige dropdowns? (Så man kan sortere medie OG genre samtidigt)
@@ -156,17 +155,13 @@ public class Display {
             if(getCurrentPanel()!=mediaPanel) {
                 getCurrentPanel().setVisible(false);
                 mediaPanel.setVisible(true);
-                frame.validate();
-                frame.repaint();
             }
         });
         fav.addActionListener(e -> {
             if(getCurrentPanel()!=favPanel) {//sætter current pane visibillity til false, hvis current pane ikke er knap
                 getCurrentPanel().setVisible(false);
-                favPanel.setVisible(true);
-                frame.validate();
-                frame.repaint();
-            }
+                favPanel.setVisible(true); //TODO virker ikke ved første opstart?? man kan ikke trykke på favourites knappen. homepage skal trykkes først
+            }                               //TODO probably fordi fav er visible fra start, hviklet den ikke burde være
         });                  //TODO hvor skal vores actionlisteners være??
     }
 
