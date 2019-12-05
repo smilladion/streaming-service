@@ -38,11 +38,11 @@ public class Display {
         (dvs. vores JPanel panel, som indeholder Media content) indsættes i scrollbaren som et argument den tager.
         Derved bliver panel så også tilføjet til frame idet at scrollbaren bliver tilføjet til frame:*/
         JScrollPane scrollBar = new JScrollPane(mediaPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollPane scrollBar1 = new JScrollPane(mediaPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//TODO TEST
+        //JScrollPane scrollBar1 = new JScrollPane(favPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//TODO TEST
         scrollBar.getVerticalScrollBar().setUnitIncrement(16); // Sætter scroll-hastigheden op.
-        scrollBar1.getVerticalScrollBar().setUnitIncrement(16); // Sætter scroll-hastigheden op.//TODO test
+        //scrollBar1.getVerticalScrollBar().setUnitIncrement(16); // Sætter scroll-hastigheden op.//TODO test
         frame.add(scrollBar); // Tilføjer scrollbar til frame.
-        frame.add(scrollBar1); // Tilføjer scrollbar til frame.//TODO TEST
+        //frame.add(scrollBar1); // Tilføjer scrollbar til frame.//TODO TEST
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack(); // Viser det.
@@ -97,7 +97,7 @@ public class Display {
         buttonPanel.add(homepage);
         frame.setVisible(true);
 
-        homepage.addActionListener(e-> showMedia());//TODO virker
+        homepage.addActionListener(e-> mediaPanel.setVisible(true));//TODO virker
         fav.addActionListener(e -> showFavourites()); //TODO hvor skal vores actionlisteners være??
     }
 
