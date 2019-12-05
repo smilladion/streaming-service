@@ -182,7 +182,7 @@ public class Display {
        // else{return searchPanel;}
     }
 
-    public void showFavourites() {
+    public void showFavourites() { //TODO gør så den bare fjerne indhold fra mediaPane og udskifter det med favoritter
         service.getPrimary().addFavourite(service.getContent().get(1));
         service.getPrimary().addFavourite(service.getContent().get(2));
         for (Media media : service.getPrimary().getFavourites()) {
