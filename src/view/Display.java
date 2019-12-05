@@ -80,6 +80,7 @@ public class Display {
     public void showResults(String txt)   {
 
         for(Media m : service.getContent()) {
+
             if (m.getTitle().contains(txt)) {
                 results.add(m);
             }
@@ -145,9 +146,15 @@ public class Display {
         frame.setVisible(true);
 
         findText.addActionListener(e-> {
+            results.removeAll(results);
+            resultPanel.removeAll();
+            resultPanel.repaint();
             showResults(findText.getText());
         });
         search2.addActionListener(e-> {
+            results.removeAll(results);
+            resultPanel.removeAll();
+            resultPanel.repaint();
             showResults(findText.getText());
         });
         endSearch.addActionListener(e-> {clearResults();});
