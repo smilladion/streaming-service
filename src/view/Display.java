@@ -60,7 +60,7 @@ public class Display {
     // Viser resultaterne af søgningen.
     public void showResults(String txt) {
         for(Media media : service.getContent()) {
-            if (media.getTitle().contains(txt)) {
+            if (media.getTitle().toLowerCase().contains(txt.toLowerCase())) {
                 results.add(media);
             }
         }
