@@ -13,7 +13,7 @@ public class Film extends Media {
         return "Film name: " + title + ", Year: " + year + ", Genres: " + genre + ", Rating: " + rating;
     }
 
-    public String getTitle()    {
+    public String getTitle() {
         return title;
     }
 

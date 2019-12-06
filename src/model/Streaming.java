@@ -24,7 +24,9 @@ public class Streaming {
         return content;
     }
 
-    public User getPrimary(){return primary; }
+    public User getPrimary() {
+        return primary;
+    }
 
     // Fylder listen med data, køres som det første når et Streaming-objekt oprettes (sammen med fillSeries()).
     public void fillMovies() {
@@ -126,15 +128,4 @@ public class Streaming {
             System.err.print(e.getMessage());
         }
     }
-
-    // Printer alle film/serier i listen til terminalen, for testing purposes
-    public void printMedia() {
-        for (Media media : content) {
-            System.out.println(media.display());
-        }
-    }
-
-
 }
-
-// TODO Tjek designfasen i Docs for andre metoder der skal implementeres!

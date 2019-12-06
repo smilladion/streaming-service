@@ -1,13 +1,10 @@
 package view;
 
-import javafx.scene.layout.BorderRepeat;
 import model.Media;
+import model.PageType;
 import model.Streaming;
 import model.User;
-import view.WrapLayout;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,8 +15,7 @@ public class Display {
     private JPanel mediaPanel;
     private JPanel buttonPanel;
     private ArrayList<Media> results;
-    private boolean isHome = true;
-
+    private PageType page = PageType.HOME;
 
     public Display() {
         frame = new JFrame();
@@ -29,7 +25,6 @@ public class Display {
         results = new ArrayList<>();
 
         mediaPanel.setBackground(new Color(31, 31, 31));
-        buttonPanel.setSize(300, 100);
         buttonPanel.setBackground(Color.BLACK);
 
         frame.add(mediaPanel, BorderLayout.SOUTH);
@@ -59,7 +54,7 @@ public class Display {
 
     // Viser resultaterne af søgningen.
     public void showResults(String txt) {
-        for(Media media : service.getContent()) {
+        for (Media media : service.getContent()) {
             if (media.getTitle().contains(txt)) {
                 results.add(media);
             }
@@ -85,7 +80,7 @@ public class Display {
         homepage.setForeground(Color.WHITE);
         homepage.setBackground(Color.BLACK);
 
-        JTextField findText = new JTextField(20); // Virker kun med titler lige nu
+        JTextField findText = new JTextField(20); // Virker kun med titler
         JButton search = new JButton("Search");
 
         buttonPanel.add(findText);
@@ -96,38 +91,36 @@ public class Display {
         buttonPanel.add(homepage);
         frame.setVisible(true);
 
-        /* TODO Bugs: kan ikke gå fra search til favourites, og fra favourites til search fucker den også.
-            Skal nok oprette et nyt tjek med tal, der repræsenterer siden, i stedet for en boolean.
-         */
-        findText.addActionListener(e-> {
+        findText.addActionListener(e -> {
             results.removeAll(results);
-            mediaPanel.removeAll();
+            clean(mediaPanel);
             showResults(findText.getText());
-            isHome = false;
+            page = PageType.SEARCH;
         });
-        search.addActionListener(e-> {
+        search.addActionListener(e -> {
             results.removeAll(results);
-            mediaPanel.removeAll();
+            clean(mediaPanel);
             showResults(findText.getText());
-            isHome = false;
+            page = PageType.SEARCH;
         });
 
         homepage.addActionListener(e -> {
-            if (!isHome) {
-                mediaPanel.removeAll();
+            if (page != PageType.HOME) {
+                clean(mediaPanel);
                 showAll();
-                isHome = true;
+                page = PageType.HOME;
             }
         });
         fav.addActionListener(e -> {
-            if (isHome) {
-                mediaPanel.removeAll();
+            if (page != PageType.FAVS) {
+                clean(mediaPanel);
                 showFavourites();
-                isHome = false;
+                page = PageType.FAVS;
             }
         });
     }
 
+    // TODO Skal integreres med User, således der kan tilføjes/fjernes til favoritterne
     public void showFavourites() {
         service.getPrimary().getFavourites().removeAll(service.getPrimary().getFavourites());
         service.getPrimary().addFavourite(service.getContent().get(1));
@@ -146,5 +139,11 @@ public class Display {
             mediaPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
         }
         frame.setVisible(true);
+    }
+
+    // Fjerner alt fra panelet.
+    public void clean(JPanel panel) {
+        panel.removeAll();
+        panel.repaint();
     }
 }

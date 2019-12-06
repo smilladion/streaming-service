@@ -41,19 +41,3 @@ public class MediaParser {
         }
     }
 }
-
-
-
-        for (Media media : results) {
-        JLabel image = new JLabel(new ImageIcon(media.getCover())); // Laver en JLabel indeholdende ImageIcon, med billedet.
-        image.setText(media.getTitle()); // Sætter billedets tekst til dens titel
-        image.setHorizontalTextPosition(SwingConstants.CENTER); // Gør at teksten befinder sig i midten
-        image.setVerticalTextPosition(SwingConstants.BOTTOM); // ... og under billedet
-        image.setForeground(Color.WHITE);
-        resultPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
-        }
-
-        resultPanel.setVisible(true);
-        frame.setVisible(true);
-
-        mediaPanel.repaint();

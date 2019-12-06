@@ -12,7 +12,7 @@ public class Series extends Media {
         this.seasons = seasons;
     }
 
-    public String getTitle()    {
+    public String getTitle() {
         return title;
     }
 
