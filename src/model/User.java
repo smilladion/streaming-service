@@ -18,7 +18,7 @@ public class User {
 
     // Tilføjer ny film/serie til favoritlisten
     public void addFavourite(Media media) {
-
+        favourites.add(media);
     }
 
     // Fjerner film/serie fra favoritlisten
