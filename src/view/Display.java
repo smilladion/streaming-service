@@ -1,9 +1,7 @@
 package view;
 
-import model.Media;
-import model.PageType;
-import model.Streaming;
-import model.User;
+import model.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -66,7 +64,6 @@ public class Display {
         showMedia(results);
     }
 
-    // TODO Måske typen af medie (film/serie) og genre skal være to forskellige dropdowns? (Så man kan sortere medie OG genre samtidigt)
     public void showButtons() {
         JButton user = new JButton("User");
         user.setForeground(Color.WHITE);
@@ -86,6 +83,7 @@ public class Display {
         String[] mType = {"All", "Films", "Series"};
         JComboBox<String> mediaType = new JComboBox<>(mType);
 
+        // TODO Lav evt dette om så der automatisk indlæses alle genrerne fra dataen i alfabetisk rækkefølge (lige nu er det gjort manuelt)
         String[] genre = {"Genre", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy",
                 "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-fi", "Sport", "Talk-show", "Thriller", "War", "Western"};
         JComboBox<String> genreType = new JComboBox<>(genre);
@@ -99,6 +97,7 @@ public class Display {
         buttonPanel.add(search);
         frame.setVisible(true);
 
+        // TODO Tilføj en exception til search, som vises på skærmen hvis der ikke kunne findes noget medie med det navn
         findText.addActionListener(e -> {
             results.removeAll(results);
             clean(mediaPanel);
@@ -124,6 +123,66 @@ public class Display {
                 clean(mediaPanel);
                 showFavourites();
                 page = PageType.FAVS;
+            }
+        });
+
+        /*
+        IntelliJ formaterede et "if, else if, else if..." statement om til dette i stedet.
+        Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
+        // TODO Ser ud til der skal være en exception til hvis .toString() fejler - nok bare i terminalen.
+        */
+        mediaType.addActionListener(e -> {
+            ArrayList<Media> mediaSelect = new ArrayList<>();
+
+            switch (mediaType.getSelectedItem().toString()) {
+                case "All":
+                    clean(mediaPanel);
+                    showAll();
+                    page = PageType.HOME;
+                    break;
+                case "Films":
+                    for (Media media : service.getContent()) {
+                        if (media instanceof Film) {
+                            mediaSelect.add(media);
+                        }
+                    }
+                    clean(mediaPanel);
+                    showMedia(mediaSelect);
+                    page = PageType.MEDIA;
+                    break;
+                case "Series":
+                    for (Media media : service.getContent()) {
+                        if (media instanceof Series) {
+                            mediaSelect.add(media);
+                        }
+                    }
+                    clean(mediaPanel);
+                    showMedia(mediaSelect);
+                    page = PageType.MEDIA;
+                    break;
+            }
+        });
+
+        // Tilføjer mediet til en liste hvis dens String med genrer indeholder den valgte dropdown (altså en specifik genre). Viser listen på skærmen.
+        // TODO Lige nu kan man ikke vælge flere genre, eller vælge en type + en genre.
+        // TODO Desuden skifter dropdown ikke tilbage til at stå på "All" eller "Genre" hvis man går væk fra sorteringen.
+        genreType.addActionListener(e -> {
+            ArrayList<Media> genreSelect = new ArrayList<>();
+
+            if (genreType.getSelectedItem().toString().equals("Genre")) {
+                clean(mediaPanel);
+                showAll();
+                page = PageType.HOME;
+            } else {
+                for (Media media : service.getContent()) {
+                    if (media.getGenre().contains(genreType.getSelectedItem().toString())) {
+                        genreSelect.add(media);
+                    }
+                }
+
+                clean(mediaPanel);
+                showMedia(genreSelect);
+                page = PageType.GENRE;
             }
         });
     }
