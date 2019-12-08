@@ -4,8 +4,11 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class Display {
 
@@ -79,14 +82,20 @@ public class Display {
 
         JTextField findText = new JTextField(20); // Virker kun med titler
         JButton search = new JButton("Search");
+        search.setForeground(Color.WHITE);
+        search.setBackground(Color.BLACK);
 
         String[] mType = {"All", "Films", "Series"};
         JComboBox<String> mediaType = new JComboBox<>(mType);
+        mediaType.setForeground(Color.WHITE);
+        mediaType.setBackground(Color.BLACK);
 
         // TODO Lav evt dette om så der automatisk indlæses alle genrerne fra dataen i alfabetisk rækkefølge (lige nu er det gjort manuelt)
         String[] genre = {"Genre", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy",
                 "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-fi", "Sport", "Talk-show", "Thriller", "War", "Western"};
         JComboBox<String> genreType = new JComboBox<>(genre);
+        genreType.setForeground(Color.WHITE);
+        genreType.setBackground(Color.BLACK);
 
         buttonPanel.add(homepage);
         buttonPanel.add(user);
@@ -203,6 +212,43 @@ public class Display {
             image.setHorizontalTextPosition(SwingConstants.CENTER); // Gør at teksten befinder sig i midten
             image.setVerticalTextPosition(SwingConstants.BOTTOM); // ... og under billedet
             image.setForeground(Color.WHITE);
+            image.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e){
+                clean(mediaPanel);
+                JPanel boxPane = new JPanel(new GridLayout(0, 1));
+                boxPane.setBackground(new Color(31, 31, 31));
+                JLabel title = new JLabel("Title: "+m.getTitle());
+                title.setForeground(Color.WHITE);
+                JLabel genre = new JLabel("Genre: "+m.getGenre());
+                genre.setForeground(Color.WHITE);
+                JLabel year = new JLabel("Year: "+m.getYear());
+                year.setForeground(Color.WHITE);
+                String s1 = Float.toString(m.getRating());
+                JLabel rating = new JLabel("Rating: "+s1);
+                rating.setForeground(Color.WHITE);
+                String s3 = new String();
+                if(m instanceof Series){
+                    s3 = ((Series) m).displaySeasons(); }
+                JLabel seasons = new JLabel("Seasons: "+s3);
+                seasons.setForeground(Color.WHITE);
+                JButton play = new JButton("PLAY");
+                JButton addToFav = new JButton("ADD TO FAVOURITES");
+
+                boxPane.add(title);
+                boxPane.add(year);
+                boxPane.add(genre);
+                boxPane.add(rating);
+                boxPane.add(seasons);
+                boxPane.add(play);
+                boxPane.add(addToFav);
+                mediaPanel.add(boxPane,BorderLayout.CENTER);
+
+                addToFav.addActionListener(event->
+                {service.getPrimary().addFavourite(m);    }); //Virker ikke?
+                play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
+
+                page = PageType.INFO;
+            }});
             mediaPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
         }
         frame.setVisible(true);

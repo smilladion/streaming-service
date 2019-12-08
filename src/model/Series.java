@@ -20,9 +20,10 @@ public class Series extends Media {
     public String display() {
         String seasonList = "";
 
-        for (Map.Entry<Integer, Integer> season : seasons.entrySet()) {
+       for (Map.Entry<Integer, Integer> season : seasons.entrySet()) {
             seasonList += season.getKey() + "-" + season.getValue() + ", ";
         }
+
 
         // Kompliceret alternativ til at fjerne det sidste komma (vi behøver det nok ikke siden dette er til testing)
         /*
@@ -34,7 +35,17 @@ public class Series extends Media {
         return "Series name: " + title + ", Year: " + year + ", Genres: " + genre + ", Rating: " + rating + ", Seasons: " + seasonList;
     }
 
-    public Map<Integer, Integer> getSeasons() {
-        return seasons;
+    public String displaySeasons() {
+        String seasonList = "";
+
+        for (Map.Entry<Integer, Integer> season : seasons.entrySet()) {
+            seasonList += season.getKey() + "-" + season.getValue() + ", ";
+        }
+
+        return seasonList.toString();
     }
+
+    public Map<Integer, Integer> getSeasons() {
+        return seasons;}
+
 }
