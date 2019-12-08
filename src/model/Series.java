@@ -24,7 +24,6 @@ public class Series extends Media {
             seasonList += season.getKey() + "-" + season.getValue() + ", ";
         }
 
-
         // Kompliceret alternativ til at fjerne det sidste komma (vi behøver det nok ikke siden dette er til testing)
         /*
         String seasonList = seasons.entrySet().stream()
