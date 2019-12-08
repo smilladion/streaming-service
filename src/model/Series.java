@@ -41,7 +41,7 @@ public class Series extends Media {
             seasonList += season.getKey() + "-" + season.getValue() + ", ";
         }
 
-        return seasonList.toString();
+        return "Seasons: "+seasonList;
     }
 
     public Map<Integer, Integer> getSeasons() {

@@ -229,7 +229,7 @@ public class Display {
                 String s3 = new String();
                 if(m instanceof Series){
                     s3 = ((Series) m).displaySeasons(); }
-                JLabel seasons = new JLabel("Seasons: "+s3);
+                JLabel seasons = new JLabel(s3);
                 seasons.setForeground(Color.WHITE);
                 JButton play = new JButton("PLAY");
                 JButton addToFav = new JButton("ADD TO FAVOURITES");
