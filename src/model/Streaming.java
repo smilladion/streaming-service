@@ -49,7 +49,9 @@ public class Streaming {
                 // Tilføjer billedet til cover hvis dens filnavn indeholder filmens titel
                 for (File pic : pics) {
                     if (pic.isFile()) {
-                        if (pic.getName().contains(title)) {
+                        String name = pic.getName().substring(0, pic.getName().length() - 4); // Fjerner ".jpg" fra billedernes navne
+
+                        if (name.equalsIgnoreCase(title)) {
                             cover = ImageIO.read(pic);
                         }
                     }
@@ -106,7 +108,9 @@ public class Streaming {
 
                 for (File pic : pics) {
                     if (pic.isFile()) {
-                        if (pic.getName().contains(title)) {
+                        String name = pic.getName().substring(0, pic.getName().length() - 4);
+
+                        if (name.equalsIgnoreCase(title)) {
                             cover = ImageIO.read(pic);
                         }
                     }

@@ -7,6 +7,7 @@ import model.User;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Display {
 
@@ -39,12 +40,15 @@ public class Display {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(800, 600);
+        frame.setSize(1000, 800);
         frame.setVisible(true); // Viser det.
 
         // Fylder content-listen med data.
         service.fillMovies();
         service.fillSeries();
+
+        // Arrangerer contents alfabetisk (så film/serier er blandede)
+        service.getContent().sort(Comparator.comparing(Media::getTitle));
     }
 
     // Viser indholdet af contents-listen på skærmen.
@@ -72,10 +76,6 @@ public class Display {
         fav.setForeground(Color.WHITE);
         fav.setBackground(Color.BLACK);
 
-        JButton sort = new JButton("Sort by");
-        sort.setForeground(Color.WHITE);
-        sort.setBackground(Color.BLACK);
-
         JButton homepage = new JButton("Home");
         homepage.setForeground(Color.WHITE);
         homepage.setBackground(Color.BLACK);
@@ -83,12 +83,20 @@ public class Display {
         JTextField findText = new JTextField(20); // Virker kun med titler
         JButton search = new JButton("Search");
 
-        buttonPanel.add(findText);
-        buttonPanel.add(search);
+        String[] mType = {"All", "Films", "Series"};
+        JComboBox<String> mediaType = new JComboBox<>(mType);
+
+        String[] genre = {"Genre", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy",
+                "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-fi", "Sport", "Talk-show", "Thriller", "War", "Western"};
+        JComboBox<String> genreType = new JComboBox<>(genre);
+
+        buttonPanel.add(homepage);
         buttonPanel.add(user);
         buttonPanel.add(fav);
-        buttonPanel.add(sort);
-        buttonPanel.add(homepage);
+        buttonPanel.add(mediaType);
+        buttonPanel.add(genreType);
+        buttonPanel.add(findText);
+        buttonPanel.add(search);
         frame.setVisible(true);
 
         findText.addActionListener(e -> {
