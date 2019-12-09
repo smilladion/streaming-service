@@ -197,10 +197,8 @@ public class Display {
     }
 
     // TODO Skal integreres med User, således der kan tilføjes/fjernes til favoritterne
+    // TODO Evt tilføj exception, der vises på skærmen, hvis listen er tom
     public void showFavourites() {
-        service.getPrimary().getFavourites().removeAll(service.getPrimary().getFavourites());
-        service.getPrimary().addFavourite(service.getContent().get(1));
-        service.getPrimary().addFavourite(service.getContent().get(2));
         showMedia(service.getPrimary().getFavourites());
     }
 
