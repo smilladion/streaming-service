@@ -241,9 +241,14 @@ public class Display {
                 boxPane.add(addToFav);
                 mediaPanel.add(boxPane,BorderLayout.CENTER);
 
-                addToFav.addActionListener(event-> //TODO lav exception der notificerer brugeren hvis filmen allerede er tilføjet
-                {if(!service.getPrimary().getFavourites().contains(m)){ //tjeker om den allerede indeholder filmen
-                    service.getPrimary().addFavourite(m);   } }); //Virker ikke?
+                addToFav.addActionListener(event->{
+                    try {
+                        addFavourite(m);
+                    } catch (Exception ex){
+                        //ex.getMessage();
+                        // TODO find ud af hvad der skal ske her når man prøver at tiløfje en film der allerede er der
+                    }
+                });
                 play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
 
                 page = PageType.INFO;
@@ -252,6 +257,13 @@ public class Display {
         }
         frame.setVisible(true);
     }
+    public void addFavourite(Media media){ //tilføjer en film til favourites, og kaster en exception hvis den allerede er der
+        if(!service.getPrimary().getFavourites().contains(media)) {
+            service.getPrimary().addFavourite(media);
+        } else { throw new MediaAlreadyAFavouriteException();}
+    }
+
+
 
     // Fjerner alt fra panelet.
     public void clean(JPanel panel) {
