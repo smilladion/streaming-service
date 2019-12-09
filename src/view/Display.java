@@ -241,7 +241,7 @@ public class Display {
                 boxPane.add(addToFav);
                 mediaPanel.add(boxPane,BorderLayout.CENTER);
 
-                addToFav.addActionListener(event->
+                addToFav.addActionListener(event-> //TODO lav exception der notificerer brugeren hvis filmen allerede er tilføjet
                 {if(!service.getPrimary().getFavourites().contains(m)){ //tjeker om den allerede indeholder filmen
                     service.getPrimary().addFavourite(m);   } }); //Virker ikke?
                 play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
