@@ -246,7 +246,7 @@ public class Display {
                         addFavourite(m);
                     } catch (Exception ex){
                         //ex.getMessage();
-                        // TODO find ud af hvad der skal ske her når man prøver at tiløfje en film der allerede er der
+                        // TODO find ud af hvad der skal ske her når man prøver at tiløfje en film der allerede er der #notify user
                     }
                 });
                 play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
