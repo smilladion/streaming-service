@@ -207,7 +207,7 @@ public class Display {
     //TODO skal nok gøres sådan at mouselisteneren kører en metode når der trykkes på den.
     //TODO så alt det med at vise filminformationen skal være en metode i sig selv probably. eller gøre at
     //TODO hvis pagetype = movieinfo, kan man ikke trykke på billedet
-    ///TODO skal også gøres at man kan trykke på filmen under søgning eller favoritter og stadigvæk se informationen.
+
     // Viser alle film/serier fra den valgte liste i mediaPanel.
     public void showMedia(ArrayList<Media> media) {
         for (Media m : media) {
