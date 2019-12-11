@@ -196,6 +196,10 @@ public class Display {
         });
     }
 
+    public void showMovieInfo(){
+        //TODO makes something here
+    }
+
     // TODO Skal integreres med User, således der kan tilføjes/fjernes til favoritterne
     public void showFavourites() {
         showMedia(service.getPrimary().getFavourites());
@@ -298,10 +302,13 @@ public class Display {
                 play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
 
                 page = PageType.INFO;
+                mediaPanel.revalidate(); //opdaterer siden
+                mediaPanel.repaint(); //opdaterer siden
             }});
             mediaPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
         }
         frame.setVisible(true);
+
     }
     public void addFavourite(Media media){ //tilføjer en film til favourites, og kaster en exception hvis den allerede er der
         if(!service.getPrimary().getFavourites().contains(media)) {
