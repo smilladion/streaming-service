@@ -197,11 +197,13 @@ public class Display {
     }
 
     // TODO Skal integreres med User, således der kan tilføjes/fjernes til favoritterne
-    // TODO Evt tilføj exception, der vises på skærmen, hvis listen er tom
     public void showFavourites() {
         showMedia(service.getPrimary().getFavourites());
     }
-
+    //TODO skal nok gøres sådan at mouselisteneren kører en metode når der trykkes på den.
+    //TODO så alt det med at vise filminformationen skal være en metode i sig selv probably. eller gøre at
+    //TODO hvis pagetype = movieinfo, kan man ikke trykke på billedet
+    ///TODO skal også gøres at man kan trykke på filmen under søgning eller favoritter og stadigvæk se informationen.
     // Viser alle film/serier fra den valgte liste i mediaPanel.
     public void showMedia(ArrayList<Media> media) {
         for (Media m : media) {
@@ -210,35 +212,80 @@ public class Display {
             image.setHorizontalTextPosition(SwingConstants.CENTER); // Gør at teksten befinder sig i midten
             image.setVerticalTextPosition(SwingConstants.BOTTOM); // ... og under billedet
             image.setForeground(Color.WHITE);
+
             image.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e){
                 clean(mediaPanel);
-                JPanel boxPane = new JPanel(new GridLayout(0, 1));
+                JPanel boxPane = new JPanel(new GridBagLayout());
                 boxPane.setBackground(new Color(31, 31, 31));
+                GridBagConstraints gbc = new GridBagConstraints(); //gør så man kan ændre gridbags alyout
+
                 JLabel title = new JLabel("Title: "+m.getTitle());
                 title.setForeground(Color.WHITE);
+                gbc.gridx = 1; //sæter dens x-position
+                gbc.gridy = 0; //sætter dens y-position
+                gbc.gridheight = 1; //sætter dens højde
+                gbc.insets = new Insets(0,10,0,0); //ændrer afstanden den holder til de andre komponenter
+                gbc.anchor = GridBagConstraints.WEST; //gør at teksten holder sig i venstre side
+                boxPane.add(title,gbc); //tilføjer den til layoutet
+
                 JLabel genre = new JLabel("Genre: "+m.getGenre());
                 genre.setForeground(Color.WHITE);
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.gridheight = 1;
+                gbc.insets = new Insets(0,10,0,0);
+                boxPane.add(genre,gbc);
+
                 JLabel year = new JLabel("Year: "+m.getYear());
                 year.setForeground(Color.WHITE);
+                gbc.gridx = 1;
+                gbc.gridy=2;
+                gbc.gridheight = 1;
+                gbc.insets = new Insets(0,10,0,0);
+                boxPane.add(year,gbc);
+
                 String s1 = Float.toString(m.getRating());
                 JLabel rating = new JLabel("Rating: "+s1);
                 rating.setForeground(Color.WHITE);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.gridheight = 1;
+                gbc.insets = new Insets(0,10,0,0);
+                boxPane.add(rating,gbc);
+                //delen nedenunder tilføjer billedet
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridheight = 10;
+                gbc.fill = GridBagConstraints.BOTH;
+                boxPane.add(image,gbc);
+
                 String s3 = new String();
                 if(m instanceof Series){
                     s3 = ((Series) m).displaySeasons(); }
                 JLabel seasons = new JLabel(s3);
                 seasons.setForeground(Color.WHITE);
-                JButton play = new JButton("PLAY");
-                JButton addToFav = new JButton("ADD TO FAVOURITES");
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.gridheight = 1;
+                gbc.insets = new Insets(0,10,0,0);
+                boxPane.add(seasons,gbc);
 
-                boxPane.add(title);
-                boxPane.add(year);
-                boxPane.add(genre);
-                boxPane.add(rating);
-                boxPane.add(seasons);
-                boxPane.add(play);
-                boxPane.add(addToFav);
+                JButton play = new JButton("PLAY");
+                gbc.gridx = 1;
+                gbc.gridy = 7;
+                gbc.gridheight = 1;
+                gbc.insets = new Insets(30,10,0,0);
+                boxPane.add(play,gbc);
+
+                JButton addToFav = new JButton("ADD TO FAVOURITES");
+                gbc.gridx = 1;
+                gbc.gridy = 8;
+                gbc.gridheight = 1;
+                gbc.insets = new Insets(20,10,0,0);
+                boxPane.add(addToFav,gbc);
+
+
                 mediaPanel.add(boxPane,BorderLayout.CENTER);
 
                 addToFav.addActionListener(event->{
