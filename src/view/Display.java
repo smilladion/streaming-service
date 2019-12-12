@@ -1,9 +1,10 @@
 package view;
 
-import Controller.MainController;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -57,13 +58,18 @@ public class Display {
     }
 
     // Viser resultaterne af søgningen.
-    public void showResults(String txt) {
+    public void showResults(String txt) throws MediaNotFoundException {
         for (Media media : service.getContent()) {
             if (media.getTitle().toLowerCase().contains(txt.toLowerCase())) {
                 results.add(media);
             }
         }
+
         showMedia(results);
+
+        if (results.isEmpty()) {
+            throw new MediaNotFoundException();
+        }
     }
 
     public void showButtons() {
@@ -105,19 +111,22 @@ public class Display {
         buttonPanel.add(search);
         frame.setVisible(true);
 
-        // TODO Tilføj en exception til search, som vises på skærmen hvis der ikke kunne findes noget medie med det navn
-        findText.addActionListener(e -> {
-            results.removeAll(results);
+        // TODO Bug: exception virker kun ved første search af en eller anden grund, skal fixes
+        ActionListener listener = e -> {
+            results.clear();
             clean(mediaPanel);
-            showResults(findText.getText());
             page = PageType.SEARCH;
-        });
-        search.addActionListener(e -> {
-            results.removeAll(results);
-            clean(mediaPanel);
-            showResults(findText.getText());
-            page = PageType.SEARCH;
-        });
+            try {
+                showResults(findText.getText());
+            } catch (MediaNotFoundException exception) {
+                JLabel msg = new JLabel("Yeet boy: " + exception.getMessage());
+                msg.setForeground(Color.WHITE);
+                mediaPanel.add(msg);
+            }
+        };
+
+        findText.addActionListener(listener);
+        search.addActionListener(listener);
 
         homepage.addActionListener(e -> {
             if (page != PageType.HOME) {
@@ -126,19 +135,23 @@ public class Display {
                 page = PageType.HOME;
             }
         });
+
+        // TODO Hvis man fjerner den sidste film i listen ser man ikke exception før man har trykket på home page
         fav.addActionListener(e -> {
             if (page != PageType.FAVS) {
                 clean(mediaPanel);
-                showFavourites();
                 page = PageType.FAVS;
+                try {
+                    showFavourites();
+                } catch (NoFavsException ex) {
+                    JLabel msg = new JLabel(ex.getMessage());
+                    msg.setForeground(Color.WHITE);
+                    mediaPanel.add(msg);
+                }
             }
         });
 
-        /*
-        IntelliJ formaterede et "if, else if, else if..." statement om til dette i stedet.
-        Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
-        // TODO Ser ud til der skal være en exception til hvis .toString() fejler - nok bare i terminalen.
-        */
+        // Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
         mediaType.addActionListener(e -> {
             ArrayList<Media> mediaSelect = new ArrayList<>();
 
@@ -195,17 +208,13 @@ public class Display {
         });
     }
 
-    public void showMovieInfo(){
-        //TODO makes something here
-    }
-
-    // TODO Skal integreres med User, således der kan tilføjes/fjernes til favoritterne
     public void showFavourites() {
         showMedia(service.getPrimary().getFavourites());
+
+        if (service.getPrimary().getFavourites().isEmpty()) {
+            throw new NoFavsException();
+        }
     }
-    //TODO skal nok gøres sådan at mouselisteneren kører en metode når der trykkes på den.
-    //TODO så alt det med at vise filminformationen skal være en metode i sig selv probably. eller gøre at
-    //TODO hvis pagetype = movieinfo, kan man ikke trykke på billedet
 
     // Viser alle film/serier fra den valgte liste i mediaPanel.
     public void showMedia(ArrayList<Media> media) {
