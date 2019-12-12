@@ -1,14 +1,13 @@
 package view;
 
+import Controller.MainController;
 import model.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 
 public class Display {
 
@@ -212,17 +211,13 @@ public class Display {
     public void showMedia(ArrayList<Media> media) {
         for (Media m : media) {
             JLabel image = new JLabel(new ImageIcon(m.getCover())); // Laver en JLabel indeholdende ImageIcon, med billedet.
-            image.setText(m.getTitle()); // Sætter billedets tekst til dens titel
-            image.setHorizontalTextPosition(SwingConstants.CENTER); // Gør at teksten befinder sig i midten
-            image.setVerticalTextPosition(SwingConstants.BOTTOM); // ... og under billedet
-            image.setForeground(Color.WHITE);
 
             image.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 clean(mediaPanel);
                 JPanel boxPane = new JPanel(new GridBagLayout());
                 boxPane.setBackground(new Color(31, 31, 31));
-                GridBagConstraints gbc = new GridBagConstraints(); //gør så man kan ændre gridbags alyout
+                GridBagConstraints gbc = new GridBagConstraints(); //gør så man kan ændre gridbags layout
 
                 JLabel title = new JLabel("Title: "+m.getTitle());
                 title.setForeground(Color.WHITE);
@@ -257,6 +252,7 @@ public class Display {
                 gbc.gridheight = 1;
                 gbc.insets = new Insets(0,10,0,0);
                 boxPane.add(rating,gbc);
+
                 //delen nedenunder tilføjer billedet
                 gbc.gridx = 0;
                 gbc.gridy = 0;
@@ -265,8 +261,10 @@ public class Display {
                 boxPane.add(image,gbc);
 
                 String s3 = new String();
-                if(m instanceof Series){
-                    s3 = ((Series) m).displaySeasons(); }
+                if(m instanceof Series) {
+                    s3 = ((Series) m).displaySeasons();
+                }
+
                 JLabel seasons = new JLabel(s3);
                 seasons.setForeground(Color.WHITE);
                 gbc.gridx = 1;
@@ -282,23 +280,36 @@ public class Display {
                 gbc.insets = new Insets(30,10,0,0);
                 boxPane.add(play,gbc);
 
-                JButton addToFav = new JButton("ADD TO FAVOURITES");
-                gbc.gridx = 1;
-                gbc.gridy = 8;
-                gbc.gridheight = 1;
-                gbc.insets = new Insets(20,10,0,0);
-                boxPane.add(addToFav,gbc);
+                if (page != PageType.FAVS) {
+                    JButton addToFav = new JButton("ADD TO FAVOURITES");
+                    gbc.gridx = 1;
+                    gbc.gridy = 8;
+                    gbc.gridheight = 1;
+                    gbc.insets = new Insets(20,10,0,0);
+                    boxPane.add(addToFav,gbc);
 
+                    addToFav.addActionListener(event -> {
+                        try {
+                            service.getPrimary().addFavourite(m);
+                        } catch (Exception ex){
+                            JOptionPane.showMessageDialog(frame,ex.getMessage());
+                        }
+                    });
+                } else {
+                    JButton removeFav = new JButton("REMOVE FROM FAVOURITES");
+                    gbc.gridx = 1;
+                    gbc.gridy = 8;
+                    gbc.gridheight = 1;
+                    gbc.insets = new Insets(20,10,0,0);
+                    boxPane.add(removeFav,gbc);
+
+                    removeFav.addActionListener(event -> {
+                        service.getPrimary().removeFavourite(m);
+                    });
+                }
 
                 mediaPanel.add(boxPane,BorderLayout.CENTER);
 
-                addToFav.addActionListener(event->{
-                    try {
-                        addFavourite(m);
-                    } catch (Exception ex){
-                        JOptionPane.showMessageDialog(frame,ex.getMessage());
-                    }
-                });
                 play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
 
                 page = PageType.INFO;
@@ -308,15 +319,7 @@ public class Display {
             mediaPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
         }
         frame.setVisible(true);
-
     }
-    public void addFavourite(Media media){ //tilføjer en film til favourites, og kaster en exception hvis den allerede er der
-        if(!service.getPrimary().getFavourites().contains(media)) {
-            service.getPrimary().addFavourite(media);
-        } else { throw new MediaAlreadyAFavouriteException();}
-    }
-
-
 
     // Fjerner alt fra panelet.
     public void clean(JPanel panel) {

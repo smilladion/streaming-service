@@ -18,12 +18,15 @@ public class User {
 
     // Tilføjer ny film/serie til favoritlisten
     public void addFavourite(Media media) {
-        favourites.add(media);
+        if (!favourites.contains(media)) {
+            favourites.add(media);
+        } else {
+            throw new MediaAlreadyAFavouriteException();
+        }
     }
 
     // Fjerner film/serie fra favoritlisten
     public void removeFavourite(Media media) {
-
+        favourites.remove(media);
     }
-
 }
