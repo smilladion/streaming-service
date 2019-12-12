@@ -119,7 +119,7 @@ public class Display {
             try {
                 showResults(findText.getText());
             } catch (MediaNotFoundException exception) {
-                JLabel msg = new JLabel("Yeet boy: " + exception.getMessage());
+                JLabel msg = new JLabel(exception.getMessage());
                 msg.setForeground(Color.WHITE);
                 mediaPanel.add(msg);
                 mediaPanel.revalidate(); //opdaterer siden
