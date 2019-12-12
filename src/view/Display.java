@@ -111,7 +111,7 @@ public class Display {
         buttonPanel.add(search);
         frame.setVisible(true);
 
-        // TODO Bug: exception virker kun ved første search af en eller anden grund, skal fixes
+
         ActionListener listener = e -> {
             results.clear();
             clean(mediaPanel);
@@ -122,6 +122,8 @@ public class Display {
                 JLabel msg = new JLabel("Yeet boy: " + exception.getMessage());
                 msg.setForeground(Color.WHITE);
                 mediaPanel.add(msg);
+                mediaPanel.revalidate(); //opdaterer siden
+                mediaPanel.repaint();
             }
         };
 
@@ -136,7 +138,7 @@ public class Display {
             }
         });
 
-        // TODO Hvis man fjerner den sidste film i listen ser man ikke exception før man har trykket på home page
+
         fav.addActionListener(e -> {
             if (page != PageType.FAVS) {
                 clean(mediaPanel);
@@ -147,6 +149,8 @@ public class Display {
                     JLabel msg = new JLabel(ex.getMessage());
                     msg.setForeground(Color.WHITE);
                     mediaPanel.add(msg);
+                    mediaPanel.revalidate(); //opdaterer siden
+                    mediaPanel.repaint();
                 }
             }
         });
