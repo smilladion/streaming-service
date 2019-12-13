@@ -163,32 +163,6 @@ public class Display {
             String selectedGenre = genreType.getSelectedItem().toString();
 
 
-            ArrayList<String> genres = new ArrayList<>();
-            ArrayList<String> types = new ArrayList<>();
-
-            genres.add(new String("Action"));
-            genres.add(new String("Adventure"));
-            genres.add(new String("Biography"));
-            genres.add(new String("Comedy"));
-            genres.add(new String("Crime"));
-            genres.add(new String("Documentary"));
-            genres.add(new String("Drama"));
-            genres.add(new String("Family"));
-            genres.add(new String("Fantasy"));
-            genres.add(new String("Film-Noir"));
-            genres.add(new String("History"));
-            genres.add(new String("Horror"));
-            genres.add(new String("Music"));
-            genres.add(new String("Musical"));
-            genres.add(new String("Mystery"));
-            genres.add(new String("Romance"));
-            genres.add(new String("Sci-fi"));
-            genres.add(new String("Sport"));
-            genres.add(new String("Talk-show"));
-            genres.add(new String("Thriller"));
-            genres.add(new String("War"));
-            genres.add(new String("Western"));
-
             if (selectedType.equals("All") & selectedGenre.equals("Genre"))  {
                 clean(mediaPanel);
                 showAll();
