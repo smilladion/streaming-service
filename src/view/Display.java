@@ -206,7 +206,7 @@ public class Display {
             {
                 clean(mediaPanel);
                 showMedia(selectedMedia);
-                page = PageType.GENRE;
+                page = PageType.SORT;
 
             }
         };

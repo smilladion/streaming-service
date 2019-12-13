@@ -1,5 +1,5 @@
 package model;
 
 public enum PageType {
-    HOME, FAVS, SEARCH, GENRE, MEDIA, INFO
+    HOME, FAVS, SEARCH, SORT, INFO
 }
