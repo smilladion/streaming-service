@@ -155,7 +155,94 @@ public class Display {
             }
         });
 
-        // Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
+        //Sorterer Media på både Film/Series og Genre
+            ActionListener listenerSort = e -> {
+
+            ArrayList<Media> selectedMedia = new ArrayList<>();
+            String selectedType = mediaType.getSelectedItem().toString();
+            String selectedGenre = genreType.getSelectedItem().toString();
+
+
+            ArrayList<String> genres = new ArrayList<>();
+            ArrayList<String> types = new ArrayList<>();
+
+            genres.add(new String("Action"));
+            genres.add(new String("Adventure"));
+            genres.add(new String("Biography"));
+            genres.add(new String("Comedy"));
+            genres.add(new String("Crime"));
+            genres.add(new String("Documentary"));
+            genres.add(new String("Drama"));
+            genres.add(new String("Family"));
+            genres.add(new String("Fantasy"));
+            genres.add(new String("Film-Noir"));
+            genres.add(new String("History"));
+            genres.add(new String("Horror"));
+            genres.add(new String("Music"));
+            genres.add(new String("Musical"));
+            genres.add(new String("Mystery"));
+            genres.add(new String("Romance"));
+            genres.add(new String("Sci-fi"));
+            genres.add(new String("Sport"));
+            genres.add(new String("Talk-show"));
+            genres.add(new String("Thriller"));
+            genres.add(new String("War"));
+            genres.add(new String("Western"));
+
+            if (selectedType.equals("All") & selectedGenre.equals("Genre"))  {
+                clean(mediaPanel);
+                showAll();
+                page = PageType.HOME;
+            } else if (selectedType.equals("All") & selectedGenre!="Genre") {
+                for (Media media : service.getContent()) {
+                    if (media.getGenre().contains(selectedGenre)) {
+                        selectedMedia.add(media);
+                    }
+                }
+            }
+            else if  (selectedType.equals("Series") & selectedGenre!="Genre")   {
+                for (Media media : service.getContent())    {
+                    if (media.getGenre().contains(selectedGenre) & media instanceof Series) {
+                        selectedMedia.add(media);
+                    }
+                }
+            }
+
+            else if (selectedType.equals("Films") & selectedGenre!="Genre")   {
+                for (Media media : service.getContent())    {
+                    if (media.getGenre().contains(selectedGenre) & media instanceof Film) {
+                        selectedMedia.add(media);
+                    }
+                }
+            }
+            else if (selectedType.equals("Series") & selectedGenre.equals("Genre")) {
+                for (Media media : service.getContent()) {
+                    if (media instanceof Series) {
+                        selectedMedia.add(media);
+                    }
+                }
+            }
+            else if (selectedType.equals("Films") & selectedGenre.equals("Genre")) {
+                for (Media media : service.getContent()) {
+                    if (media instanceof Film) {
+                        selectedMedia.add(media);
+                    }
+                }
+            }
+            {
+                clean(mediaPanel);
+                showMedia(selectedMedia);
+                page = PageType.GENRE;
+
+            }
+        };
+
+        genreType.addActionListener(listenerSort);
+        mediaType.addActionListener(listenerSort);
+    }
+    //GAMMEL SORTERINGSMETODE:
+
+        /*// Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
         mediaType.addActionListener(e -> {
             ArrayList<Media> mediaSelect = new ArrayList<>();
 
@@ -189,7 +276,7 @@ public class Display {
         });
 
         // Tilføjer mediet til en liste hvis dens String med genrer indeholder den valgte dropdown (altså en specifik genre). Viser listen på skærmen.
-        // TODO Lige nu kan man ikke vælge flere genre, eller vælge en type + en genre.
+
         // TODO Desuden skifter dropdown ikke tilbage til at stå på "All" eller "Genre" hvis man går væk fra sorteringen.
         genreType.addActionListener(e -> {
             ArrayList<Media> genreSelect = new ArrayList<>();
@@ -210,7 +297,7 @@ public class Display {
                 page = PageType.GENRE;
             }
         });
-    }
+    }*/
 
     public void showFavourites() {
         showMedia(service.getPrimary().getFavourites());

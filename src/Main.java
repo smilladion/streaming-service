@@ -6,5 +6,6 @@ public class Main {
         Display display = new Display();
         display.showButtons();
         display.showAll();
+
     }
 }
