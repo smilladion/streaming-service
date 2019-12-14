@@ -170,11 +170,7 @@ public class Display {
             String selectedGenre = genreType.getSelectedItem().toString();
 
 
-            if (selectedType.equals("All") & selectedGenre.equals("Genre"))  {
-                clean(mediaPanel);
-                showAll();
-                page = PageType.HOME;
-            } else if (selectedType.equals("All") & selectedGenre!="Genre") {
+             if (selectedType.equals("All") & selectedGenre!="Genre") {
                 for (Media media : service.getContent()) {
                     if (media.getGenre().contains(selectedGenre)) {
                         selectedMedia.add(media);
@@ -210,11 +206,16 @@ public class Display {
                     }
                 }
             }
-            {
+            { if (selectedType.equals("All") & selectedGenre.equals("Genre"))  {
+                clean(mediaPanel);
+                showAll();
+                page = PageType.HOME;
+            } else{
                 clean(mediaPanel);
                 showMedia(selectedMedia);
                 page = PageType.SORT;
 
+            }
             }
         };
 
