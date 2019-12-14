@@ -16,6 +16,10 @@ public class User {
         return favourites;
     }
 
+    public String getName() {
+        return name;
+    }
+
     // Tilføjer ny film/serie til favoritlisten
     public void addFavourite(Media media) {
         if (!favourites.contains(media)) {

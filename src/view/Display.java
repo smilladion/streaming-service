@@ -3,7 +3,6 @@ package view;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,7 +13,7 @@ import java.util.Comparator;
 
 public class Display {
 
-    private Streaming service = new Streaming(new User("Test"));
+    private Streaming service = new Streaming(new User("Bob"), new User("Jean"));
     private JFrame frame;
     private JPanel mediaPanel;
     private JPanel buttonPanel;
@@ -124,11 +123,10 @@ public class Display {
                 JLabel msg = new JLabel(exception.getMessage());
                 msg.setForeground(Color.WHITE);
                 mediaPanel.add(msg);
-                mediaPanel.revalidate(); //opdaterer siden
-                mediaPanel.repaint();
             }
         };
 
+        // Tilføjer den oprettede listener defineret oven over, så tekstfeltet og search-knappen gør det samme
         findText.addActionListener(listener);
         search.addActionListener(listener);
 
@@ -140,9 +138,53 @@ public class Display {
             }
         });
 
-        user.addActionListener(e ->{ //TODO lav actionlistener dropdown med user1 og user2 maybe
+        user.addActionListener(e -> {
+            if (page != PageType.USER) {
+                clean(mediaPanel);
+                page = PageType.USER;
 
+                // Tilføj knapper for hver bruger i listen, samt deres Listener
+                for (User u : service.getUsers()) {
+                    JButton button = new JButton(u.getName());
+                    mediaPanel.add(button);
 
+                    button.addActionListener(event -> {
+                        for (Component comp : mediaPanel.getComponents()) {
+                            if (comp instanceof JButton) {
+                                comp.setForeground(Color.WHITE); // Sætter alle knapper på panelet til en specifik farve (sort)
+                                comp.setBackground(Color.BLACK);
+                            }
+                        }
+
+                        service.setPrimary(u);
+                        button.setForeground(Color.BLACK); // Sætter den primære bruger til en specifik farve (hvid)
+                        button.setBackground(Color.WHITE);
+                        mediaPanel.revalidate();
+                        mediaPanel.repaint();
+                    });
+
+                    // Når man går ind på User fanen, så sæt farverne alt efter hvilken bruger der er primær
+                    if (button.getText().equals(service.getPrimary().getName())) {
+                        button.setForeground(Color.BLACK);
+                        button.setBackground(Color.WHITE);
+                    } else {
+                        button.setForeground(Color.WHITE);
+                        button.setBackground(Color.BLACK);
+                    }
+                }
+
+                // TODO Kode til at tilføje add/remove user knapper
+                /* JButton addUser = new JButton("ADD USER");
+                JButton removeUser = new JButton("REMOVE USER");
+                mediaPanel.add(addUser);
+                mediaPanel.add(removeUser);
+
+                addUser.addActionListener(event -> {
+                    String name = JOptionPane.showInputDialog(frame, "Please type in the name of the new user:");
+                    service.getUsers().add(new User(name));
+                }); */
+
+            }
         });
 
         fav.addActionListener(e -> {
@@ -155,8 +197,6 @@ public class Display {
                     JLabel msg = new JLabel(ex.getMessage());
                     msg.setForeground(Color.WHITE);
                     mediaPanel.add(msg);
-                    mediaPanel.revalidate(); //opdaterer siden
-                    mediaPanel.repaint();
                 }
             }
         });
@@ -168,53 +208,45 @@ public class Display {
             String selectedType = mediaType.getSelectedItem().toString();
             String selectedGenre = genreType.getSelectedItem().toString();
 
-
-            if (selectedType.equals("All") & selectedGenre.equals("Genre"))  {
+            if (selectedType.equals("All") && selectedGenre.equals("Genre"))  {
                 clean(mediaPanel);
                 showAll();
                 page = PageType.HOME;
-            } else if (selectedType.equals("All") & selectedGenre!="Genre") {
+            } else if (selectedType.equals("All") && !selectedGenre.equals("Genre")) {
                 for (Media media : service.getContent()) {
                     if (media.getGenre().contains(selectedGenre)) {
                         selectedMedia.add(media);
                     }
                 }
-            }
-            else if  (selectedType.equals("Series") & selectedGenre!="Genre")   {
+            } else if  (selectedType.equals("Series") && !selectedGenre.equals("Genre"))   {
                 for (Media media : service.getContent())    {
-                    if (media.getGenre().contains(selectedGenre) & media instanceof Series) {
+                    if (media.getGenre().contains(selectedGenre) && media instanceof Series) {
                         selectedMedia.add(media);
                     }
                 }
-            }
-
-            else if (selectedType.equals("Films") & selectedGenre!="Genre")   {
+            } else if (selectedType.equals("Films") && !selectedGenre.equals("Genre"))   {
                 for (Media media : service.getContent())    {
-                    if (media.getGenre().contains(selectedGenre) & media instanceof Film) {
+                    if (media.getGenre().contains(selectedGenre) && media instanceof Film) {
                         selectedMedia.add(media);
                     }
                 }
-            }
-            else if (selectedType.equals("Series") & selectedGenre.equals("Genre")) {
+            } else if (selectedType.equals("Series") && selectedGenre.equals("Genre")) {
                 for (Media media : service.getContent()) {
                     if (media instanceof Series) {
                         selectedMedia.add(media);
                     }
                 }
-            }
-            else if (selectedType.equals("Films") & selectedGenre.equals("Genre")) {
+            } else if (selectedType.equals("Films") && selectedGenre.equals("Genre")) {
                 for (Media media : service.getContent()) {
                     if (media instanceof Film) {
                         selectedMedia.add(media);
                     }
                 }
             }
-            {
-                clean(mediaPanel);
-                showMedia(selectedMedia);
-                page = PageType.SORT;
 
-            }
+            clean(mediaPanel);
+            showMedia(selectedMedia);
+            page = PageType.SORT;
         };
 
         genreType.addActionListener(listenerSort);
@@ -342,8 +374,6 @@ public class Display {
                 });
 
                 page = PageType.INFO;
-                mediaPanel.revalidate(); //opdaterer siden
-                mediaPanel.repaint(); //opdaterer siden
             }});
             mediaPanel.add(image); // Tilføjer billedet til vinduet fra konstruktoren.
         }
@@ -365,6 +395,7 @@ public class Display {
     public void clean(JPanel panel) {
         panel.removeAll();
         panel.repaint();
+        panel.revalidate();
     }
 }
 

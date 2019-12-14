@@ -13,10 +13,11 @@ public class Streaming {
     private final ArrayList<User> users;
     private User primary;
 
-    public Streaming(User user) {
-        primary = user;
+    public Streaming(User primary, User secondary) {
+        this.primary = primary;
         users = new ArrayList<>();
-        users.add(user);
+        users.add(primary);
+        users.add(secondary);
         content = new ArrayList<>();
     }
 
@@ -26,6 +27,14 @@ public class Streaming {
 
     public User getPrimary() {
         return primary;
+    }
+
+    public void setPrimary(User user) {
+        primary = user;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     // Fylder listen med data, køres som det første når et Streaming-objekt oprettes (sammen med fillSeries()).
