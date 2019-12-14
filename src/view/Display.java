@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -214,64 +216,7 @@ public class Display {
         genreType.addActionListener(listenerSort);
         mediaType.addActionListener(listenerSort);
     }
-    //GAMMEL SORTERINGSMETODE:
 
-        /*// Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
-        mediaType.addActionListener(e -> {
-            ArrayList<Media> mediaSelect = new ArrayList<>();
-
-            switch (mediaType.getSelectedItem().toString()) {
-                case "All":
-                    clean(mediaPanel);
-                    showAll();
-                    page = PageType.HOME;
-                    break;
-                case "Films":
-                    for (Media media : service.getContent()) {
-                        if (media instanceof Film) {
-                            mediaSelect.add(media);
-                        }
-                    }
-                    clean(mediaPanel);
-                    showMedia(mediaSelect);
-                    page = PageType.MEDIA;
-                    break;
-                case "Series":
-                    for (Media media : service.getContent()) {
-                        if (media instanceof Series) {
-                            mediaSelect.add(media);
-                        }
-                    }
-                    clean(mediaPanel);
-                    showMedia(mediaSelect);
-                    page = PageType.MEDIA;
-                    break;
-            }
-        });
-
-        // Tilføjer mediet til en liste hvis dens String med genrer indeholder den valgte dropdown (altså en specifik genre). Viser listen på skærmen.
-
-        // TODO Desuden skifter dropdown ikke tilbage til at stå på "All" eller "Genre" hvis man går væk fra sorteringen.
-        genreType.addActionListener(e -> {
-            ArrayList<Media> genreSelect = new ArrayList<>();
-
-            if (genreType.getSelectedItem().toString().equals("Genre")) {
-                clean(mediaPanel);
-                showAll();
-                page = PageType.HOME;
-            } else {
-                for (Media media : service.getContent()) {
-                    if (media.getGenre().contains(genreType.getSelectedItem().toString())) {
-                        genreSelect.add(media);
-                    }
-                }
-
-                clean(mediaPanel);
-                showMedia(genreSelect);
-                page = PageType.GENRE;
-            }
-        });
-    }*/
 
     public void showFavourites() {
         showMedia(service.getPrimary().getFavourites());
@@ -281,7 +226,7 @@ public class Display {
         }
     }
 
-    // Viser alle film/serier fra den valgte liste i mediaPanel.
+    // Viser alle film/serier fra den valgte liste i mediaPanel, og tilføjer en mouselistener så kan man trykke på billede og se info.
     public void showMedia(ArrayList<Media> media) {
         for (Media m : media) {
             JLabel image = new JLabel(new ImageIcon(m.getCover())); // Laver en JLabel indeholdende ImageIcon, med billedet.
@@ -384,7 +329,13 @@ public class Display {
 
                 mediaPanel.add(boxPane,BorderLayout.CENTER);
 
-                play.addActionListener(event-> {}); //Indsæt noget som agerer playfunktion her
+                play.addActionListener(event-> {
+                        try{
+                            playMedia();
+                        }catch(java.net.URISyntaxException exc) {
+                            System.err.println(exc.getMessage());
+                        }
+                });
 
                 page = PageType.INFO;
                 mediaPanel.revalidate(); //opdaterer siden
@@ -395,9 +346,79 @@ public class Display {
         frame.setVisible(true);
     }
 
+    public void playMedia() throws java.net.URISyntaxException{ //åbner browser hvor den afspiller en youtubevideo.
+        final URI uri = new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        if(Desktop.isDesktopSupported()){
+            try {
+                Desktop.getDesktop().browse(uri);
+            } catch(IOException e){
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
     // Fjerner alt fra panelet.
     public void clean(JPanel panel) {
         panel.removeAll();
         panel.repaint();
     }
 }
+
+//GAMMEL SORTERINGSMETODE:
+
+        /*// Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
+        mediaType.addActionListener(e -> {
+            ArrayList<Media> mediaSelect = new ArrayList<>();
+
+            switch (mediaType.getSelectedItem().toString()) {
+                case "All":
+                    clean(mediaPanel);
+                    showAll();
+                    page = PageType.HOME;
+                    break;
+                case "Films":
+                    for (Media media : service.getContent()) {
+                        if (media instanceof Film) {
+                            mediaSelect.add(media);
+                        }
+                    }
+                    clean(mediaPanel);
+                    showMedia(mediaSelect);
+                    page = PageType.MEDIA;
+                    break;
+                case "Series":
+                    for (Media media : service.getContent()) {
+                        if (media instanceof Series) {
+                            mediaSelect.add(media);
+                        }
+                    }
+                    clean(mediaPanel);
+                    showMedia(mediaSelect);
+                    page = PageType.MEDIA;
+                    break;
+            }
+        });
+
+        // Tilføjer mediet til en liste hvis dens String med genrer indeholder den valgte dropdown (altså en specifik genre). Viser listen på skærmen.
+
+        // TODO Desuden skifter dropdown ikke tilbage til at stå på "All" eller "Genre" hvis man går væk fra sorteringen.
+        genreType.addActionListener(e -> {
+            ArrayList<Media> genreSelect = new ArrayList<>();
+
+            if (genreType.getSelectedItem().toString().equals("Genre")) {
+                clean(mediaPanel);
+                showAll();
+                page = PageType.HOME;
+            } else {
+                for (Media media : service.getContent()) {
+                    if (media.getGenre().contains(genreType.getSelectedItem().toString())) {
+                        genreSelect.add(media);
+                    }
+                }
+
+                clean(mediaPanel);
+                showMedia(genreSelect);
+                page = PageType.GENRE;
+            }
+        });
+    }*/
