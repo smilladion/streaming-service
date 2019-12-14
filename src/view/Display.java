@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
 public class Display {
 
@@ -286,6 +287,18 @@ public class Display {
                 String s3 = new String();
                 if(m instanceof Series) {
                     s3 = ((Series) m).displaySeasons();
+
+                    /*((Series) m).getSeasons(); //returnerer hashmap med season og series //TODO forsøg på at lave dropdown til sæson og episode
+                    Integer[] seasonList =
+                    };
+                    JComboBox<Integer> SerieSeasons = new JComboBox<>(seasonList);
+                    SerieSeasons.setForeground(Color.WHITE);
+                    SerieSeasons.setBackground(Color.BLACK);
+
+                    for (Map.Entry<Integer, Integer> season : ((Series) m).getSeasons().entrySet()) {
+                        season.getKey();
+                    }*/
+
                 }
 
                 JLabel seasons = new JLabel(s3);
