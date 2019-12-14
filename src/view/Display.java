@@ -140,6 +140,10 @@ public class Display {
             }
         });
 
+        user.addActionListener(e ->{ //TODO lav actionlistener dropdown med user1 og user2 maybe
+
+
+        });
 
         fav.addActionListener(e -> {
             if (page != PageType.FAVS) {
