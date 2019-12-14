@@ -20,7 +20,7 @@ public class Series extends Media {
     public String display() {
         String seasonList = "";
 
-       for (Map.Entry<Integer, Integer> season : seasons.entrySet()) {
+        for (Map.Entry<Integer, Integer> season : seasons.entrySet()) {
             seasonList += season.getKey() + "-" + season.getValue() + ", ";
         }
 
@@ -41,10 +41,13 @@ public class Series extends Media {
             seasonList += season.getKey() + "-" + season.getValue() + ", ";
         }
 
-        return "Seasons: "+seasonList;
+        return "Seasons: " + seasonList;
     }
 
-    public Map<Integer, Integer> getSeasons() {
-        return seasons;}
 
-}
+        public Map<Integer, Integer> getSeasons(){
+            return seasons;
+        }
+
+    }
+

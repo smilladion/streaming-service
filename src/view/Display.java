@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
 public class Display {
 
@@ -201,42 +202,38 @@ public class Display {
             }
         });
 
-        //Sorterer Media på både Film/Series og Genre
-            ActionListener listenerSort = e -> {
+        // Sorterer Media på både Film/Series og Genre
+        ActionListener listenerSort = e -> {
 
             ArrayList<Media> selectedMedia = new ArrayList<>();
             String selectedType = mediaType.getSelectedItem().toString();
             String selectedGenre = genreType.getSelectedItem().toString();
 
-            if (selectedType.equals("All") && selectedGenre.equals("Genre"))  {
-                clean(mediaPanel);
-                showAll();
-                page = PageType.HOME;
-            } else if (selectedType.equals("All") && !selectedGenre.equals("Genre")) {
+            if (selectedType.equals("All") && !selectedGenre.equals("Genre")) {
                 for (Media media : service.getContent()) {
                     if (media.getGenre().contains(selectedGenre)) {
                         selectedMedia.add(media);
                     }
                 }
-            } else if  (selectedType.equals("Series") && !selectedGenre.equals("Genre"))   {
-                for (Media media : service.getContent())    {
+            } else if (selectedType.equals("Series") && !selectedGenre.equals("Genre")) {
+                for (Media media : service.getContent()) {
                     if (media.getGenre().contains(selectedGenre) && media instanceof Series) {
                         selectedMedia.add(media);
                     }
                 }
-            } else if (selectedType.equals("Films") && !selectedGenre.equals("Genre"))   {
-                for (Media media : service.getContent())    {
+            } else if (selectedType.equals("Films") && !selectedGenre.equals("Genre")) {
+                for (Media media : service.getContent()) {
                     if (media.getGenre().contains(selectedGenre) && media instanceof Film) {
                         selectedMedia.add(media);
                     }
                 }
-            } else if (selectedType.equals("Series") && selectedGenre.equals("Genre")) {
-                for (Media media : service.getContent()) {
+            } else if (selectedType.equals("Series")) { // Tjekkede oven over om genren != "Genre", så behøver ikke tjekke det omvendte her...
+                for (Media media : service.getContent()) { //... når koden hertil, så er selectedGenre altid = "Genre"
                     if (media instanceof Series) {
                         selectedMedia.add(media);
                     }
                 }
-            } else if (selectedType.equals("Films") && selectedGenre.equals("Genre")) {
+            } else if (selectedType.equals("Films")) {
                 for (Media media : service.getContent()) {
                     if (media instanceof Film) {
                         selectedMedia.add(media);
@@ -244,9 +241,15 @@ public class Display {
                 }
             }
 
-            clean(mediaPanel);
-            showMedia(selectedMedia);
-            page = PageType.SORT;
+            if (selectedType.equals("All") & selectedGenre.equals("Genre")) {
+                clean(mediaPanel);
+                showAll();
+                page = PageType.HOME;
+            } else {
+                clean(mediaPanel);
+                showMedia(selectedMedia);
+                page = PageType.SORT;
+            }
         };
 
         genreType.addActionListener(listenerSort);
@@ -318,6 +321,18 @@ public class Display {
                 String s3 = new String();
                 if(m instanceof Series) {
                     s3 = ((Series) m).displaySeasons();
+
+                    /*((Series) m).getSeasons(); //returnerer hashmap med season og series //TODO forsøg på at lave dropdown til sæson og episode
+                    Integer[] seasonList =
+                    };
+                    JComboBox<Integer> SerieSeasons = new JComboBox<>(seasonList);
+                    SerieSeasons.setForeground(Color.WHITE);
+                    SerieSeasons.setBackground(Color.BLACK);
+
+                    for (Map.Entry<Integer, Integer> season : ((Series) m).getSeasons().entrySet()) {
+                        season.getKey();
+                    }*/
+
                 }
 
                 JLabel seasons = new JLabel(s3);
