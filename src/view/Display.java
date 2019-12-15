@@ -322,6 +322,7 @@ public class Display {
                     gbc.insets = new Insets(15,10,0,0);
                     boxPane.add(season, gbc);
 
+
                     JComboBox<Integer> seasonBox = new JComboBox<>(seasonList.toArray(new Integer[0]));
                     seasonBox.setBackground(Color.BLACK);
                     seasonBox.setForeground(Color.WHITE);
@@ -329,22 +330,23 @@ public class Display {
                     gbc.insets = new Insets(0,10,5,0);
                     boxPane.add(seasonBox, gbc);
 
+                    JLabel episode = new JLabel("Episode:");
+                    episode.setForeground(Color.WHITE);
+                    layout(gbc,1,6,1);
+                    gbc.insets = new Insets(15,10,0,0);
+                    boxPane.add(episode,gbc);
+
                     JComboBox<Integer> episodeBox = new JComboBox<>();
                     episodeBox.setBackground(Color.BLACK);
                     episodeBox.setForeground(Color.WHITE);
                     layout(gbc,1,7,1);
                     gbc.insets = new Insets(0,10,5,0);
+                    boxPane.add(episodeBox,gbc);
 
                     seasonBox.addActionListener(event -> {
                         episodeBox.removeAllItems();
                         for (Map.Entry<Integer, Integer> s : ((Series) m).getSeasons().entrySet()) {
                             if (seasonBox.getSelectedItem().equals(s.getKey())) {
-
-                                JLabel episode = new JLabel("Episode:");
-                                episode.setForeground(Color.WHITE);
-                                layout(gbc,1,6,1);
-                                gbc.insets = new Insets(15,10,0,0);
-                                boxPane.add(episode,gbc);
 
                                 for (int i = 1; i <= s.getValue(); i++) {
 
@@ -354,7 +356,6 @@ public class Display {
                                     // TODO Det der står her nu virker, hvis man indsætter System.out.println(i).
                                     // TODO Kan dog ikke få noget Swing relateret til at vise på skærmen.
                                 }
-                                boxPane.add(episodeBox,gbc);
 
                             }
 
