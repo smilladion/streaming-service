@@ -304,7 +304,7 @@ public class Display {
                 boxPane.add(rating,gbc);
 
                 //delen nedenunder tilføjer billedet
-                layout(gbc, 0, 0, 10);
+                layout(gbc, 0, 0, 14);
                 gbc.fill = GridBagConstraints.BOTH;
                 boxPane.add(image, gbc);
 
@@ -329,27 +329,44 @@ public class Display {
                     gbc.insets = new Insets(0,10,5,0);
                     boxPane.add(seasonBox, gbc);
 
-                    /* seasonBox.addActionListener(event -> {
+                    seasonBox.addActionListener(event -> {
                         for (Map.Entry<Integer, Integer> s : ((Series) m).getSeasons().entrySet()) {
                             if (seasonBox.getSelectedItem().equals(s.getKey())) {
+
+                                JLabel episode = new JLabel("Episode:");
+                                episode.setForeground(Color.WHITE);
+                                layout(gbc,1,6,1);
+                                gbc.insets = new Insets(15,10,0,0);
+                                boxPane.add(episode,gbc);
+
+                                JComboBox<Integer> episodeBox = new JComboBox<>();
+                                episodeBox.setBackground(Color.BLACK);
+                                episodeBox.setForeground(Color.WHITE);
+                                layout(gbc,1,7,1);
+                                gbc.insets = new Insets(0,10,5,0);
+                                boxPane.add(episodeBox,gbc);
                                 for (int i = 1; i <= s.getValue(); i++) {
+                                    episodeBox.addItem(i);
+
                                     // TODO Kode til at vise episoderne. Skal gøres inde i dette for loop.
                                     // TODO Det der står her nu virker, hvis man indsætter System.out.println(i).
                                     // TODO Kan dog ikke få noget Swing relateret til at vise på skærmen.
                                 }
+                                mediaPanel.revalidate();
+                                mediaPanel.repaint();
                             }
                         }
-                    }); */
+                    });
                 }
 
                 JButton play = new JButton("PLAY");
-                layout(gbc, 1, 7, 1);
+                layout(gbc, 1, 8, 1);
                 gbc.insets = new Insets(30,10,0,0);
                 boxPane.add(play,gbc);
 
                 if (page != PageType.FAVS) {
                     JButton addToFav = new JButton("ADD TO FAVOURITES");
-                    layout(gbc, 1, 8, 1);
+                    layout(gbc, 1, 9, 1);
                     gbc.insets = new Insets(15,10,0,0);
                     boxPane.add(addToFav,gbc);
 
@@ -362,7 +379,7 @@ public class Display {
                     });
                 } else {
                     JButton removeFav = new JButton("REMOVE FROM FAVOURITES");
-                    layout(gbc, 1, 8, 1);
+                    layout(gbc, 1, 10, 1);
                     gbc.insets = new Insets(20,10,0,0);
                     boxPane.add(removeFav,gbc);
 
@@ -402,6 +419,7 @@ public class Display {
     // Fjerner alt fra panelet.
     public void clean(JPanel panel) {
         panel.removeAll();
+        panel.revalidate();
         panel.repaint();
         panel.revalidate();
     }
