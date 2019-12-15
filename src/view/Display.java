@@ -329,7 +329,14 @@ public class Display {
                     gbc.insets = new Insets(0,10,5,0);
                     boxPane.add(seasonBox, gbc);
 
+                    JComboBox<Integer> episodeBox = new JComboBox<>();
+                    episodeBox.setBackground(Color.BLACK);
+                    episodeBox.setForeground(Color.WHITE);
+                    layout(gbc,1,7,1);
+                    gbc.insets = new Insets(0,10,5,0);
+
                     seasonBox.addActionListener(event -> {
+                        episodeBox.removeAllItems();
                         for (Map.Entry<Integer, Integer> s : ((Series) m).getSeasons().entrySet()) {
                             if (seasonBox.getSelectedItem().equals(s.getKey())) {
 
@@ -339,22 +346,20 @@ public class Display {
                                 gbc.insets = new Insets(15,10,0,0);
                                 boxPane.add(episode,gbc);
 
-                                JComboBox<Integer> episodeBox = new JComboBox<>();
-                                episodeBox.setBackground(Color.BLACK);
-                                episodeBox.setForeground(Color.WHITE);
-                                layout(gbc,1,7,1);
-                                gbc.insets = new Insets(0,10,5,0);
-                                boxPane.add(episodeBox,gbc);
                                 for (int i = 1; i <= s.getValue(); i++) {
+
                                     episodeBox.addItem(i);
 
                                     // TODO Kode til at vise episoderne. Skal gøres inde i dette for loop.
                                     // TODO Det der står her nu virker, hvis man indsætter System.out.println(i).
                                     // TODO Kan dog ikke få noget Swing relateret til at vise på skærmen.
                                 }
-                                mediaPanel.revalidate();
-                                mediaPanel.repaint();
+                                boxPane.add(episodeBox,gbc);
+
                             }
+
+                            mediaPanel.revalidate();
+                            mediaPanel.repaint();
                         }
                     });
                 }
