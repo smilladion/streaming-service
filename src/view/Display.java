@@ -279,97 +279,90 @@ public class Display {
 
                 JLabel title = new JLabel("Title: "+m.getTitle());
                 title.setForeground(Color.WHITE);
-                gbc.gridx = 1; //sæter dens x-position
-                gbc.gridy = 0; //sætter dens y-position
-                gbc.gridheight = 1; //sætter dens højde
+                layout(gbc, 1, 0, 1);
                 gbc.insets = new Insets(0,10,0,0); //ændrer afstanden den holder til de andre komponenter
                 gbc.anchor = GridBagConstraints.WEST; //gør at teksten holder sig i venstre side
                 boxPane.add(title,gbc); //tilføjer den til layoutet
 
                 JLabel genre = new JLabel("Genre: "+m.getGenre());
                 genre.setForeground(Color.WHITE);
-                gbc.gridx = 1;
-                gbc.gridy = 1;
-                gbc.gridheight = 1;
+                layout(gbc, 1, 1, 1);
                 gbc.insets = new Insets(0,10,0,0);
                 boxPane.add(genre,gbc);
 
                 JLabel year = new JLabel("Year: "+m.getYear());
                 year.setForeground(Color.WHITE);
-                gbc.gridx = 1;
-                gbc.gridy=2;
-                gbc.gridheight = 1;
+                layout(gbc, 1, 2, 1);
                 gbc.insets = new Insets(0,10,0,0);
                 boxPane.add(year,gbc);
 
                 String s1 = Float.toString(m.getRating());
                 JLabel rating = new JLabel("Rating: "+s1);
                 rating.setForeground(Color.WHITE);
-                gbc.gridx = 1;
-                gbc.gridy = 3;
-                gbc.gridheight = 1;
+                layout(gbc, 1, 3, 1);
                 gbc.insets = new Insets(0,10,0,0);
                 boxPane.add(rating,gbc);
 
                 //delen nedenunder tilføjer billedet
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                gbc.gridheight = 10;
+                layout(gbc, 0, 0, 10);
                 gbc.fill = GridBagConstraints.BOTH;
-                boxPane.add(image,gbc);
+                boxPane.add(image, gbc);
 
-                String s3 = new String();
+                // Tilføjer valg af sæson/episoder hos serierne
                 if(m instanceof Series) {
-                    s3 = ((Series) m).displaySeasons();
-
-                    /*((Series) m).getSeasons(); //returnerer hashmap med season og series //TODO forsøg på at lave dropdown til sæson og episode
-                    Integer[] seasonList =
-                    };
-                    JComboBox<Integer> SerieSeasons = new JComboBox<>(seasonList);
-                    SerieSeasons.setForeground(Color.WHITE);
-                    SerieSeasons.setBackground(Color.BLACK);
+                    ArrayList<Integer> seasonList = new ArrayList<>();
 
                     for (Map.Entry<Integer, Integer> season : ((Series) m).getSeasons().entrySet()) {
-                        season.getKey();
-                    }*/
+                        seasonList.add(season.getKey());
+                    }
 
+                    JLabel season = new JLabel("Season:");
+                    season.setForeground(Color.WHITE);
+                    layout(gbc, 1, 4, 1);
+                    gbc.insets = new Insets(15,10,0,0);
+                    boxPane.add(season, gbc);
+
+                    JComboBox<Integer> seasonBox = new JComboBox<>(seasonList.toArray(new Integer[0]));
+                    seasonBox.setBackground(Color.BLACK);
+                    seasonBox.setForeground(Color.WHITE);
+                    layout(gbc, 1, 5, 1);
+                    gbc.insets = new Insets(0,10,5,0);
+                    boxPane.add(seasonBox, gbc);
+
+                    /* seasonBox.addActionListener(event -> {
+                        for (Map.Entry<Integer, Integer> s : ((Series) m).getSeasons().entrySet()) {
+                            if (seasonBox.getSelectedItem().equals(s.getKey())) {
+                                for (int i = 1; i <= s.getValue(); i++) {
+                                    // TODO Kode til at vise episoderne. Skal gøres inde i dette for loop.
+                                    // TODO Det der står her nu virker, hvis man indsætter System.out.println(i).
+                                    // TODO Kan dog ikke få noget Swing relateret til at vise på skærmen.
+                                }
+                            }
+                        }
+                    }); */
                 }
 
-                JLabel seasons = new JLabel(s3);
-                seasons.setForeground(Color.WHITE);
-                gbc.gridx = 1;
-                gbc.gridy = 5;
-                gbc.gridheight = 1;
-                gbc.insets = new Insets(0,10,0,0);
-                boxPane.add(seasons,gbc);
-
                 JButton play = new JButton("PLAY");
-                gbc.gridx = 1;
-                gbc.gridy = 7;
-                gbc.gridheight = 1;
+                layout(gbc, 1, 7, 1);
                 gbc.insets = new Insets(30,10,0,0);
                 boxPane.add(play,gbc);
 
                 if (page != PageType.FAVS) {
                     JButton addToFav = new JButton("ADD TO FAVOURITES");
-                    gbc.gridx = 1;
-                    gbc.gridy = 8;
-                    gbc.gridheight = 1;
-                    gbc.insets = new Insets(20,10,0,0);
+                    layout(gbc, 1, 8, 1);
+                    gbc.insets = new Insets(15,10,0,0);
                     boxPane.add(addToFav,gbc);
 
                     addToFav.addActionListener(event -> {
                         try {
                             service.getPrimary().addFavourite(m);
-                        } catch (Exception ex){
+                        } catch (Exception ex) {
                             JOptionPane.showMessageDialog(frame,ex.getMessage());
                         }
                     });
                 } else {
                     JButton removeFav = new JButton("REMOVE FROM FAVOURITES");
-                    gbc.gridx = 1;
-                    gbc.gridy = 8;
-                    gbc.gridheight = 1;
+                    layout(gbc, 1, 8, 1);
                     gbc.insets = new Insets(20,10,0,0);
                     boxPane.add(removeFav,gbc);
 
@@ -412,63 +405,12 @@ public class Display {
         panel.repaint();
         panel.revalidate();
     }
+
+    /* Bruges i showMedia() til layout. Indeholder ikke .insets(), fordi den selv har fire parametre som skiftes ud ofte, og
+    heller ikke .add() til panelet, da denne skal kaldes efter .insets(). */
+    public void layout(GridBagConstraints gbc, int x, int y, int height) {
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.gridheight = height;
+    }
 }
-
-//GAMMEL SORTERINGSMETODE:
-
-        /*// Tjekker hvilken dropdown der blev valgt, og herefter viser de medier der er af typen Film eller Series.
-        mediaType.addActionListener(e -> {
-            ArrayList<Media> mediaSelect = new ArrayList<>();
-
-            switch (mediaType.getSelectedItem().toString()) {
-                case "All":
-                    clean(mediaPanel);
-                    showAll();
-                    page = PageType.HOME;
-                    break;
-                case "Films":
-                    for (Media media : service.getContent()) {
-                        if (media instanceof Film) {
-                            mediaSelect.add(media);
-                        }
-                    }
-                    clean(mediaPanel);
-                    showMedia(mediaSelect);
-                    page = PageType.MEDIA;
-                    break;
-                case "Series":
-                    for (Media media : service.getContent()) {
-                        if (media instanceof Series) {
-                            mediaSelect.add(media);
-                        }
-                    }
-                    clean(mediaPanel);
-                    showMedia(mediaSelect);
-                    page = PageType.MEDIA;
-                    break;
-            }
-        });
-
-        // Tilføjer mediet til en liste hvis dens String med genrer indeholder den valgte dropdown (altså en specifik genre). Viser listen på skærmen.
-
-        // TODO Desuden skifter dropdown ikke tilbage til at stå på "All" eller "Genre" hvis man går væk fra sorteringen.
-        genreType.addActionListener(e -> {
-            ArrayList<Media> genreSelect = new ArrayList<>();
-
-            if (genreType.getSelectedItem().toString().equals("Genre")) {
-                clean(mediaPanel);
-                showAll();
-                page = PageType.HOME;
-            } else {
-                for (Media media : service.getContent()) {
-                    if (media.getGenre().contains(genreType.getSelectedItem().toString())) {
-                        genreSelect.add(media);
-                    }
-                }
-
-                clean(mediaPanel);
-                showMedia(genreSelect);
-                page = PageType.GENRE;
-            }
-        });
-    }*/
