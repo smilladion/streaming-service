@@ -41,7 +41,7 @@ public class Streaming {
     public void fillMovies() {
         try {
             Scanner scanner = new Scanner(new File("resources/movies_text.txt")) // Opretter ny scanner til data
-                    .useLocale(Locale.forLanguageTag("en-DK")) // Ændrer sproget som aflæses, således at kommaer kan konverteres til punktummer (ift. ratings)
+                    .useLocale(Locale.forLanguageTag("en-DK")) // Ændrer sproget som aflæses
                     .useDelimiter("; |;"); // Afgrænser hvilke symboler som deler informationen op: enten "; " eller ";" (fordi datafilen er halvdårlig og ikke konsekvent med mellemrum)
 
             File folder = new File("resources/pics/Film");
