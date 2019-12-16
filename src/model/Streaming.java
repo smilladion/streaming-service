@@ -52,7 +52,7 @@ public class Streaming {
                 String title = scanner.next().trim(); // Trim-funktionen sørger for at denne String ikke har noget "whitespace", altså mellemrum eller newlines
                 String year = scanner.next().trim();
                 String genre = scanner.next().trim();
-                float rating = scanner.nextFloat();
+                String rating = scanner.next().trim();
                 BufferedImage cover = null;
 
                 // Tilføjer billedet til cover hvis dens filnavn indeholder filmens titel
@@ -97,7 +97,7 @@ public class Streaming {
                 String title = scanner.next().trim();
                 String year = scanner.next().trim();
                 String genre = scanner.next().trim();
-                float rating = scanner.nextFloat();
+                String rating = scanner.next().trim();
 
                 // Laver en ny scanner over den næste "bid" i dataen, altså rækken af sæsoner/episoder (et String af formatet "1-8, 2-22")
                 Scanner seasonsScanner = new Scanner(scanner.next().trim())

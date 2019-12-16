@@ -7,7 +7,7 @@ public class Series extends Media {
 
     private final Map<Integer, Integer> seasons; // Indeholder sæson nummer som key og antal episoder som value
 
-    public Series(String title, String year, String genre, float rating, BufferedImage cover, Map<Integer, Integer> seasons) {
+    public Series(String title, String year, String genre, String rating, BufferedImage cover, Map<Integer, Integer> seasons) {
         super(title, year, genre, rating, cover);
         this.seasons = seasons;
     }

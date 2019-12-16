@@ -3,6 +3,7 @@ package view;
 import model.*;
 import model.exceptions.MediaNotFoundException;
 import model.exceptions.NoFavsException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -267,31 +268,30 @@ public class Display {
                 boxPane.setBackground(new Color(31, 31, 31));
                 GridBagConstraints gbc = new GridBagConstraints(); // Gør så man kan ændre GridBag layoutet.
 
-                JLabel title = new JLabel("Title: "+m.getTitle());
+                JLabel title = new JLabel("Title: " + m.getTitle());
                 title.setForeground(Color.WHITE);
                 layout(gbc, 1, 0, 1);
-                gbc.insets = new Insets(0,10,0,0); // Ændrer afstanden den holder til de andre komponenter.
+                gbc.insets = new Insets(0, 10, 0, 0); // Ændrer afstanden den holder til de andre komponenter.
                 gbc.anchor = GridBagConstraints.WEST; // Gør at teksten holder sig i venstre side.
                 boxPane.add(title, gbc); // Tilføjer den til panelet.
 
                 // Opretter de nye elementer på denne side.
-                JLabel genre = new JLabel("Genre: "+m.getGenre());
+                JLabel genre = new JLabel("Genre: " + m.getGenre());
                 genre.setForeground(Color.WHITE);
                 layout(gbc, 1, 1, 1);
-                gbc.insets = new Insets(0,10,0,0);
+                gbc.insets = new Insets(0, 10, 0, 0);
                 boxPane.add(genre, gbc);
 
-                JLabel year = new JLabel("Year: "+m.getYear());
+                JLabel year = new JLabel("Year: " + m.getYear());
                 year.setForeground(Color.WHITE);
                 layout(gbc, 1, 2, 1);
-                gbc.insets = new Insets(0,10,0,0);
+                gbc.insets = new Insets(0, 10, 0, 0);
                 boxPane.add(year, gbc);
 
-                String s1 = Float.toString(m.getRating());
-                JLabel rating = new JLabel("Rating: "+s1);
+                JLabel rating = new JLabel("Rating: " + m.getRating());
                 rating.setForeground(Color.WHITE);
                 layout(gbc, 1, 3, 1);
-                gbc.insets = new Insets(0,10,0,0);
+                gbc.insets = new Insets(0, 10, 0, 0);
                 boxPane.add(rating, gbc);
 
                 // Delen neden under tilføjer billedet.
