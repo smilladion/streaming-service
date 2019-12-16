@@ -1,11 +1,12 @@
 package model;
 
+import model.exceptions.MediaAlreadyAFavouriteException;
 import java.util.ArrayList;
 
 public class User {
 
     private String name;
-    private ArrayList<Media> favourites;
+    private ArrayList<Media> favourites; // Giver hver oprettet bruger deres egen favoritliste af film
 
     public User(String name) {
         this.name = name;

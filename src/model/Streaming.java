@@ -9,15 +9,15 @@ import java.util.*;
 
 public class Streaming {
 
-    private final ArrayList<Media> content;
-    private final ArrayList<User> users;
-    private User primary;
+    private final ArrayList<Media> content; // Indeholder alle film og serier vi har fået fra tekstfilerne
+    private final ArrayList<User> users; // Indeholder alle de eksisterende brugere
+    private User primary; // Den nuværende bruger som er valgt/logget ind
 
     public Streaming(User primary, User secondary) {
         this.primary = primary;
         users = new ArrayList<>();
         users.add(primary);
-        users.add(secondary);
+        users.add(secondary); // Secondary er der for at kunne skifte mellem to brugere så man kan se det virker
         content = new ArrayList<>();
     }
 
@@ -37,7 +37,7 @@ public class Streaming {
         return users;
     }
 
-    // Fylder listen med data, køres som det første når et Streaming-objekt oprettes (sammen med fillSeries()).
+    // Fylder content med data, køres som det første når et Streaming-objekt oprettes (sammen med fillSeries()).
     public void fillMovies() {
         try {
             Scanner scanner = new Scanner(new File("resources/movies_text.txt")) // Opretter ny scanner til data

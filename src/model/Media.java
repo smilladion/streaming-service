@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 public abstract class Media {
 
     protected final String title;
-    protected final String year; // Fordi vi ikke skal sortere efter årstal lige nu er det bare et string
-    protected final String genre;
-    protected final float rating;
+    protected final String year; // Fordi vi ikke sorterer efter årstal er dette bare en String.
+    protected final String genre; // Indeholder alle genrer, som mediet har, så vi bare kan tjekke med .contains() senere.
+    protected final float rating; // Denne er en float i tilfælde af at vi gerne ville sortere efter rating.
     protected final BufferedImage cover;
 
     public Media(String title, String year, String genre, float rating, BufferedImage cover) {
@@ -17,8 +17,6 @@ public abstract class Media {
         this.rating = rating;
         this.cover = cover;
     }
-
-    public abstract String display();
 
     public String getTitle() {
         return title;
